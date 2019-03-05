@@ -9,6 +9,7 @@ client = Twitter::REST::Client.new(config)
 
 tweets = client.user_timeline('ise19team09')
 
+newestOrder = tweets.take(1)
 
 def checkIfNewTweets(newestOrder, tweets)
     i = 1
@@ -28,16 +29,11 @@ def checkIfNewTweets(newestOrder, tweets)
             #is equal to the newest order so stop
             break;
         end
-    end
-    
+    end  
     return newestTweet, newTweets
 end
 
-test = tweets.take(5)
-newestOrder = test[4]
-
-newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
-
-newTweets.each do |x|
-    puts x.id
+for i in 0..2 do
+    newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
+    sleep 60
 end
