@@ -7,4 +7,19 @@ get '/index' do
     erb :index
 end
 
+get '/admin' do
+    erb :admin
+end
+
+get '/customer' do
+    erb :customer
+end
+
+get '/signup' do
+    erb :signup
+end
+
+
+
+
 #get links to customer, admin, and signup page to work from here
