@@ -9,4 +9,9 @@ config = {
 
 client = Twitter::REST::Client.new(config)
 
-client.update('This is Ali sending an automated tweet using Ruby')
+tweets = client.search('@ise19team09')
+
+tweet = tweets.take(1)
+
+id = tweet[0].created_at
+puts id

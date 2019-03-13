@@ -35,5 +35,17 @@ end
 
 for i in 0..2 do
     newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
+    if (newTweets.length != 0)
+       newTweets.each do |x|
+           #Get user_id from UserInfo using twitter handle
+           userId = db.execute(
+                   'SELECT user_id FROM UserInfo WHERE twitterHandle = ?'
+                   [x.user.screen_name])
+           #Insert new tweet with user_id
+           db.execute(
+               'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
+               [x.id, userId, x.text, ])
+           
+    end
     sleep 60
 end
