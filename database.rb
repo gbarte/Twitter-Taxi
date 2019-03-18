@@ -16,8 +16,7 @@ db.execute("CREATE TABLE CarTiers (
     PRIMARY KEY(tier_id)
 );")
 
-db.execute("CREATE TABLE CurrentOrders (
-    priority    INTEGER NOT NULL,
+db.execute("CREATE TABLE CurrentOrders (git 
     user_id    INTEGER NOT NULL,
     pick_up    VARCHAR NOT NULL,
     destination    VARCHAR NOT NULL,
