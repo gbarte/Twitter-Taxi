@@ -1,0 +1,12 @@
+
+
+.main .content{
+  height: 500px;
+  width: 900px;
+}
+.main .content .top{
+  width: 800px;
+}
+tr th input.date{
+  width: 98px;
+}
