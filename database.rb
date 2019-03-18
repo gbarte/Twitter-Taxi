@@ -61,3 +61,7 @@ db.execute("CREATE TABLE UserInfo (
     password    VARCHAR,
     PRIMARY KEY(user_id)
 );")
+
+db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [1, 'Standard'])
+db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [2, 'Extra'])
+db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [3, 'Luxury'])
