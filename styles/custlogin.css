@@ -1,0 +1,29 @@
+
+form ul li{
+  display: block;
+  height: 30px;
+  width: 400px;
+  margin: 0 auto;
+  background-color:#e3ebf7;
+  margin-top: 30px;
+  border: 1px solid #afb2b5;
+  border-radius: 50px;
+}
+.main{
+  height: 600px;
+}
+.main .content{
+  height: 500px;
+}
+
+.main .content .button ul li{
+  height: 30px;
+  width: 70px;
+
+}
+.main .content .button ul li span{
+  top: 15px;
+  left: 70;
+  margin-left: -35px;
+
+}
