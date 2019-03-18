@@ -27,7 +27,7 @@ db.execute("CREATE TABLE CurrentOrders (
     PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
     FOREIGN KEY(tier_id) REFERENCES CareTiers(tier_id)
-;")
+);")
 
 db.execute("CREATE TABLE OrderHistory (
   order_id INTGER NOT NULL,
