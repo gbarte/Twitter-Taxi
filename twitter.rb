@@ -14,7 +14,9 @@ client = Twitter::REST::Client.new(config)
 
 tweets = client.user_timeline('ise19team09')
 
-newestOrder = tweets.take(1)
+    X = tweets.take(3)
+    newestOrder = x[2]
+
 
 def checkIfNewTweets(newestOrder, tweets)
     i = 1
