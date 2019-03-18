@@ -26,7 +26,7 @@ db.execute("CREATE TABLE CurrentOrders (
     tier_id INTEGER,
     PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
-    FOREIGN KEY(tier_id) REFERENCES CareTiers(tier_id)
+    FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id)
 );")
 
 db.execute("CREATE TABLE OrderHistory (
@@ -38,7 +38,7 @@ db.execute("CREATE TABLE OrderHistory (
   time TIME,
   tier_id INTEGER,
   PRIMARY KEY(order_id),
-  FOREIGN KEY(tier_id) REFEERENCES CarTiers(tier_id),
+  FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
   FOREIGN KEY(user_id) REFERENCES UserInfo(user_id)
 );")
 
