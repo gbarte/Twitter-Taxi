@@ -1,10 +1,15 @@
 require 'twitter'
+require 'sqlite3'
+
 config = {
 :consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
 :consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
 :access_token => '1092447528761610240-sKtozZ8IDihSED4UuFK2fk39bWNCa7',
 :access_token_secret => 'CbNNmZHlIZJSttTk3OlAhZ4vdfE9BJtv0iBDYGy8YHar7'
 }
+
+db = SQLite3::Database.open('database.db')
+
 client = Twitter::REST::Client.new(config)
 
 tweets = client.user_timeline('ise19team09')
@@ -35,5 +40,17 @@ end
 
 for i in 0..2 do
     newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
+    if (newTweets.length != 0)
+       newTweets.each do |x|
+           #Get user_id from UserInfo using twitter handle
+           userId = db.execute(
+                   'SELECT user_id FROM UserInfo WHERE twitterHandle = ?',
+                   [x.user.screen_name])
+           #Insert new tweet with user_id
+           db.execute(
+               'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
+               [x.id, userId, x.text, ])
+    end
     sleep 60
+end
 end
