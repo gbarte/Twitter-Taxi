@@ -7,6 +7,8 @@ set :bind, '0.0.0.0' # needed if you're running from Codio
 
 include ERB::Util
 
+VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+
 before do
     @db = SQLite3::Database.open './database.db'
 end
@@ -41,11 +43,12 @@ post '/signup' do
   
     @fname_ok =!@fname.nil? && @fname != "" 
     @lname_ok =!@lname.nil? && @lname != "" 
+    @mail_ok =!@mail.nil? && @mail =~ VALID_EMAIL_REGEX
     
     count = @db.get_first_value('SELECT COUNT(*) FROM UserInfo WHERE firstName = ?
         AND lastName = ?',[@fname,@lname])
     @unique = (count == 0)
-    @all_ok=@fname_ok && @lname_ok
+    @all_ok = @fname_ok && @lname_ok && @mail_ok
     
     #add data into the database.
     if @all_ok
