@@ -37,35 +37,31 @@ post '/signup' do
     @mail = params[:mail]
     puts(@fname)
     
-    # db.execute('')
-    
     #perform validation
   
-##    @fname_ok =!@fname.nil? && @fname != "" 
-    #not sure is this should be @db.fistname
-    #count = @db.database('SELECT COUNT(*) FROM UserInfo WHERE firstName = ?',[@fname])
-    #@unique = (count = 0)
-##    @all_ok=@fname_ok
+    @fname_ok =!@fname.nil? && @fname != "" 
+    @lname_ok =!@lname.nil? && @lname != "" 
     
-    #add first name into database.
-##    if @all_ok = @fname
+    count = @db.get_first_value('SELECT COUNT(*) FROM UserInfo WHERE firstName = ?
+        AND lastName = ?',[@fname,@lname])
+    @unique = (count == 0)
+    @all_ok=@fname_ok && @lname_ok
+    
+    #add data into the database.
+    if @all_ok
         #get next available ID
-        # the method get_first_value value if undefined here. Fix.
+        #NOTE: get_first_value is a method which belongs to @db
         user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM UserInfo';
         #do the insert
-        @db.execute('INSERT INTO UserInfo VALUES (?,?,?,?,?,?)',[user_id,@fname,@lname,@tname,@psw,@mail])
-##    end
-    
-##    erb :add
-    
+        @db.execute('INSERT INTO UserInfo VALUES (?,?,?,?,?,?)',[user_id,@fname,@lname,@tname,@mail,@psw])
+    end
+
     
     #putting erb :index here ensures that user is directed back to homepage after 
     #inputting sign up details
     #erb :index
     erb :signup
     
-
 end
-
 
 #get links to customer, admin, and signup page to work from here
