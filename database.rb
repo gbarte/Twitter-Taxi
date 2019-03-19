@@ -16,12 +16,21 @@ db.execute("CREATE TABLE CarTiers (
     PRIMARY KEY(tier_id)
 );")
 
-db.execute("CREATE TABLE CurrentOrders (git 
+db.execute("CREATE TABLE UserInfo (
+    user_id    INTEGER NOT NULL,
+    firstName    TEXT,
+    lastName    TEXT,
+    twitterHandle    TEXT,
+    emailAddress    VARCHAR,
+    password    VARCHAR,
+    PRIMARY KEY(user_id)
+);")
+
+db.execute("CREATE TABLE CurrentOrders (
     user_id    INTEGER NOT NULL,
     pick_up    VARCHAR NOT NULL,
     destination    VARCHAR NOT NULL,
-    date DATE,
-    time TIME,
+    time TEXT,
     tier_id INTEGER,
     PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
@@ -33,8 +42,7 @@ db.execute("CREATE TABLE OrderHistory (
   user_id INTEGER,
   pickUp VARCHAR,
   destination VARCHAR,
-  date DATE,
-  time TIME,
+  time TEXT,
   tier_id INTEGER,
   PRIMARY KEY(order_id),
   FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
@@ -45,20 +53,9 @@ db.execute("CREATE TABLE Tweets (
     tweet_id    INTEGER NOT NULL,
     user_id    INTEGER,
     tweet    VARCHAR NOT NULL,
-    date    DATE,
-    time    TIME,
+    time    TEXT,
     PRIMARY KEY(tweet_id),
     FOREIGN KEY(user_id) REFERENCES UserInfo(user_id)
-);")
-
-db.execute("CREATE TABLE UserInfo (
-    user_id    INTEGER NOT NULL,
-    firstName    TEXT,
-    lastName    TEXT,
-    twitterHandle    TEXT,
-    emailAddress    VARCHAR,
-    password    VARCHAR,
-    PRIMARY KEY(user_id)
 );")
 
 db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [1, 'Standard'])
