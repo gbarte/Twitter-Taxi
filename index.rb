@@ -46,25 +46,25 @@ get '/signup' do
     erb :signup
 end
 
-post '/signup' do
+post '/form_handler' do
     @submitted=true
-    @fname = params[:fname]
-    @lname = params[:lname]
-    @tname = params[:tname]
-    @psw = params[:psw]
-    @mail = params[:mail]
-    puts(@fname)
-    
+    @fname = params[:fname].strip
+    @lname = params[:lname].strip
+    @tname = params[:tname].strip
+    @psw = params[:psw].strip
+    @mail = params[:mail].strip
+ 
     #perform validation
   
     @fname_ok =!@fname.nil? && @fname != "" 
     @lname_ok =!@lname.nil? && @lname != "" 
+    @tname_ok =!@tname.nil? && @tname != ""
     @mail_ok =!@mail.nil? && @mail =~ VALID_EMAIL_REGEX
     
     count = @db.get_first_value('SELECT COUNT(*) FROM UserInfo WHERE firstName = ?
         AND lastName = ?',[@fname,@lname])
     @unique = (count == 0)
-    @all_ok = @fname_ok && @lname_ok && @mail_ok
+    @all_ok = @fname_ok && @lname_ok && @tname_ok && @mail_ok
     
     #add data into the database.
     if @all_ok
@@ -93,11 +93,11 @@ end
 
 post '/currentorders' do
     @submitted = true
-    @tname = params[:tname]
-    @pickuplocation = params[:pickuplocation]
-    @destination = params[:destination]
-    @datetime = params[:datetime]
-    @tier_id = params[:tier_id]
+    @tname = params[:tname].strip
+    @pickuplocation = params[:pickuplocation].strip
+    @destination = params[:destination].strip
+    @datetime = params[:datetime].strip
+    @tier_id = params[:tier_id].strip
     
     user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
     
