@@ -82,3 +82,27 @@ post '/signup' do
     erb :signup
     
 end
+
+
+#get links to customer, admin, and signup page to work from here
+
+get '/currentorders' do
+    @submitted = false
+    erb :currentorders
+end
+
+post '/currentorders' do
+    @submitted = true
+    @tname = params[:tname]
+    @pickuplocation = params[:pickuplocation]
+    @destination = params[:destination]
+    @datetime = params[:datetime]
+    @tier_id = params[:tier_id]
+    
+    user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+    
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
+    
+    erb :currentorders
+end
+
