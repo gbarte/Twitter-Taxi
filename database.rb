@@ -6,7 +6,6 @@ db.execute("CREATE TABLE Admins (
    admin_id    INTEGER NOT NULL,
    email_address    VARCHAR,
    password    VARCHAR NOT NULL,
-   lastest_time_log_in    TIME,
    PRIMARY KEY(admin_id)
 );")
 
@@ -61,3 +60,5 @@ db.execute("CREATE TABLE Tweets (
 db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [1, 'Standard'])
 db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [2, 'Extra'])
 db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [3, 'Luxury'])
+
+db.execute("INSERT INTO Admins(admin_id, email_address, password) VALUES(?, ?, ?)", [1, 'admintest1@gmail.com', 'passwordtest' ])
