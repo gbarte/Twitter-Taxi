@@ -21,26 +21,30 @@
           <div class="h40"></div>
           <div class="top">
           <h1>Customer Account</h1>
-
-
-          <form action=".rb" target="_blank" method="get">
-              Twitter ID:<input type="text" name="username"><br>
-              User password:<input type="password" name="psw"><br>
+              
+          <form action="orderhistory" target="_blank" method="get">
+              Twitter ID:<input type="text" name="username" value="<%h params[:username]%>"/><br>
+              User password:<input type="password" name="psw" value="<%h params[:psw]%>"/><br>
             </form>
             <div class="h12"></div>
 
             <div class="button">
+  
               <ul>
+                  <!--
 <<<<<<< HEAD:customer.html
-                <li class="login"><a href="custlogin.html"><span>Log in</span></a></li>
-                <li class="signup"><a href="signup.html"><span>Sign up</span></a></li>
+-->
+                <li class="login"><a href="orderhistory"><span>Log in</span></a></li>
+                <li class="signup"><a href="signup"><span>Sign up</span></a></li>
+                   <!--
 =======
                 <li class="login"><a href="#"><span>Log in</span></a></li>
                 <li class="signup"><a href="signup"><span>Sign up</span></a></li>
 >>>>>>> 9b44c9b9055502ded656102e54d8eb0b3dbcf27b:views/customer.erb
               </ul>
+-->
+                
             </div>
-
           </div>
         </div>
       </div>
