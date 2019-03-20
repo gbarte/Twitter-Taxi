@@ -2,6 +2,7 @@ require 'erb'
 require 'sinatra'
 #require 'sinatra/reloader'
 require 'sqlite3'
+require 'twitter'
 
 set :bind, '0.0.0.0' # needed if you're running from Codio
 
@@ -12,6 +13,14 @@ VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 before do
     @db = SQLite3::Database.open './database.db'
 end
+    config = {
+        :consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
+        :consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
+        :access_token => '1092447528761610240-sKtozZ8IDihSED4UuFK2fk39bWNCa7',
+        :access_token_secret => 'CbNNmZHlIZJSttTk3OlAhZ4vdfE9BJtv0iBDYGy8YHar7'
+    }
+
+    client = Twitter::REST::Client.new(config)
 
 get '/index' do
     erb :index
@@ -119,4 +128,10 @@ post '/addnewadmin' do
     @db.execute('INSERT INTO Admins VALUES (?, ?, ?)', [admin_id, @email, @psw])
     
     erb :addnewadmin
+end
+
+get '/viewincomingtweets' do
+    results = client.search('@ise19team09')
+    @tweets = results.take(20)
+    erb :viewincomingtweets
 end
