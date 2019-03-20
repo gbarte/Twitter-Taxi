@@ -1,82 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+     <head>
     <meta charset="utf-8">
-    <title>customer</title>
+    <title>admin</title>
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
-
+    <link rel="stylesheet" href="styles/admin.css">
   </head>
   <body>
     <div class="header">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="customer.html">Customer account</a></li>
-        <li><a href="admin.html">Admin account</a></li>
+        <li><a href="index">Home</a></li>
       </ul>
     </div>
-    <div class="main">
+  <div class="main">
         <div class="h12"></div>
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-
-          <h1>Current Orders</h1>
-
-
-          <form action="///////.rb" target="_blank" method="get">
-            <table>
-              <tr>
-
-                <th>Twitter ID</th>
-                <th>Destination</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Tier ID</th>
-              </tr>
-              <tr>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="date" name="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-              <tr>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="date" name="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-              <tr>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="date" name="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-              <tr>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="date" name="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-            </table>
-
-   <!-- PRIMARY KEY(user_id),
- FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
- FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id) -->
-
-
-          </form>
-            <div class="h12"></div>
-
-
-
-
-          </div>
+          <h1>Admin Home Page</h1>
+           <button type = "button">Place an Order</button>
+           <button type = "button">Add new admin</button>
+           <button type = "button">View incoming tweets</button>
+           <button type = "button">View Customer Details</button>
+        </div>
         </div>
       </div>
   </body>
+
 </html>
