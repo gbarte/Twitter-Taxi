@@ -31,11 +31,9 @@ get '/customer' do
     erb :customer
 end
 
-
-get '/custlogin' do
-    erb :custlogin
+get '/adminhomepage' do
+    erb :adminlogin
 end
-
 
 get '/orderhistory' do
     erb :orderhistory
