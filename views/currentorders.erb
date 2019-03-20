@@ -23,12 +23,11 @@
           <h1>Place an order</h1>
 
 
-          <form action="///////.rb" target="_blank" method="get">
+          <form action="currentorders" target="_blank" method="post">
    Twitter Handle: <input type="text" name="tname"><br>
    Pick Up Location: <input type = "text" name = "pickuplocation"><br>
    Destination:<input type="text" name="destination"><br>
-   Date:<input type="date" name="date"><br>
-   Time:<input type="time"><br>
+   Time:<input type="datetime-local" name="datetime"><br>
    Tier ID:<input type="number"><br>
    <!-- PRIMARY KEY(user_id),
  FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
