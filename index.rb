@@ -104,3 +104,19 @@ post '/currentorders' do
     erb :currentorders
 end
 
+get '/addnewadmin' do
+    @submitted = false
+    erb :addnewadmin
+end
+
+post '/addnewadmin' do 
+    @submitted = true
+    @email = params[:email].strip
+    @psw = params[:psw].strip 
+    
+    admin_id = @db.get_first_value 'SELECT MAX(admin_id)+1 FROM Admins'
+    
+    @db.execute('INSERT INTO Admins VALUES (?, ?, ?)', [admin_id, @email, @psw])
+    
+    erb :addnewadmin
+end
