@@ -22,7 +22,7 @@
           <div class="h40"></div>
           <div class="top">
           <h1>Customer Account</h1>
-            <form action="signup" target="_blank" method="post">
+            <form action="form_handler" target="_blank" method="post">
               First name: <input type="text" name="fname"><br>
               Last name: <input type="text" name="lname"><br>
               Twitter ID: <input type="text" name="tname"><br>
@@ -31,14 +31,31 @@
               <input type="submit" value="Submit">
               <input type="reset">
             </form>
-            <div class="button">
-              <ul>
-                <li class="signup"><a href="signup"><span>Sign up</span></a></li>
-              </ul>
-            </div>
+       
 
             </div>
-
+<% if @submitted && @all_ok %>
+     <p>Thanks <%=h @fname %>, we got your data.</p>
+<% else %>
+          
+   <form method = "post" action = "form_handler">
+       
+       <% if @submitted && !@fname_ok %>
+       <p style = "color:red"> Please enter your first name</p>
+       <% end %>
+     
+       <% if @submitted && !@lname_ok %>
+       <p style = "color:red"> Please enter your last name</p>
+       <% end %>
+       
+       <% if @submitted && !@tname_ok %>
+       <p style = "color:red"> Please enter your twitter handle</p>
+       <% end %>
+       
+    </form>
+            
+<% end %>
+         
 
           </div>
         </div>
