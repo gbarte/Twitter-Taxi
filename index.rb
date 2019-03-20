@@ -22,7 +22,23 @@ get '/admin' do
 end
 
 get '/customer' do
+    ######fix for login
+    unless params[:username].nil?
+    #unless params[:username].nil? && params[:psw].nil?
+        query = %{SELECT twitterHandle FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%'}
+        @results = @db.execute query
+    end
     erb :customer
+end
+
+
+get '/custlogin' do
+    erb :custlogin
+end
+
+
+get '/orderhistory' do
+    erb :orderhistory
 end
 
 get '/signup' do
@@ -67,6 +83,7 @@ post '/signup' do
     
 end
 
+
 #get links to customer, admin, and signup page to work from here
 
 get '/currentorders' do
@@ -88,4 +105,4 @@ post '/currentorders' do
     
     erb :currentorders
 end
-    
+
