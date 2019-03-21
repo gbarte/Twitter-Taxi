@@ -9,20 +9,29 @@ form ul li{
   border-radius: 50px;
 }
 .main{
-  height: 600px;
+  height: 700px;
 }
 .main .content{
-  height: 500px;
+  height: 550px;
 }
-
-.main .content .button ul li{
+.main .content .top{
+  position: relative;
+}
+.main .content .button ul li.signup{
   height: 30px;
-  width: 70px;
-
+  width: 76px;
 }
 .main .content .button ul li span{
   top: 15px;
-  left: 70;
-  margin-left: -35px;
+  left: 40px;
 
+
+}
+
+.main .content .top .notes{
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  right: 60px;
+  top: 0;
 }
