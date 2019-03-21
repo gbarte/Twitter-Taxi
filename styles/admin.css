@@ -1,0 +1,33 @@
+.main .content {
+  height: 550px;
+}
+.main .content .top .adminbuttons{
+ height: 100px;
+ width: 100%;
+ margin: 20px;
+}
+.main .content .top .adminbuttons ul{
+  overflow: hidden;
+
+}
+.main .content .top .adminbuttons ul li{
+  margin-bottom: 20px;
+  float: none;
+  display: block;
+  height: 60px;
+  width: 400px;
+  background-color: #99cc00;
+  border-radius: 50px;
+  position: relative;
+}
+.main .content .top .adminbuttons ul li span{
+  position: absolute;
+  top: 20px;
+  left: 150px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+}
+.main .content .top .adminbuttons ul li span:hover{
+  color: black;
+}
