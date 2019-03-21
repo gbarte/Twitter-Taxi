@@ -27,8 +27,35 @@ get '/index' do
 end
 
 get '/admin' do
+    @submitted = false
+    puts "printed to the terminal" 
     erb :admin
 end
+
+########## finish admin login ###########
+post '/admin' do
+  # puts "printed to the terminal" 
+   @submitted = true
+   @email = params[:mail]
+   puts @email
+   @password = params[:psw]
+    
+   #query = %{SELECT * FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
+   query = %{SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
+
+   @results = @db.execute query
+   puts @results
+   puts "searched through the database"
+   if (@results==1)
+       puts "the email addresses are the same"
+       erb :adminlogin
+   else
+       puts "different email addresses"
+       erb :index
+   end
+  # erb :index
+end
+
 
 get '/customer' do
     ######fix for login
