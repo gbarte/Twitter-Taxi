@@ -13,6 +13,10 @@ VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 before do
     @db = SQLite3::Database.open './database.db'
 end
+
+enable :sessions
+set :session_secret, 'super secret'
+
     config = {
         :consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
         :consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
@@ -37,23 +41,20 @@ post '/admin' do
   # puts "printed to the terminal" 
    @submitted = true
    @email = params[:mail]
-   puts @email
    @password = params[:psw]
+  
+    stm = @db.prepare "SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'"
+    rs = stm.execute
     
-   #query = %{SELECT * FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
-   query = %{SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
-
-   @results = @db.execute query
-   puts @results
-   puts "searched through the database"
-   if (@results==1)
-       puts "the email addresses are the same"
-       erb :adminlogin
-   else
-       puts "different email addresses"
-       erb :index
-   end
-  # erb :index
+    pass = @db.execute "SELECT password FROM Admins WHERE email_address LIKE '%#{params[:mail]}%' AND password LIKE '%#{params[:psw]}%'"
+    pass = pass.join "\s"
+ 
+    if params[:psw] == pass
+        session[:logged_in] = true
+        redirect '/adminhomepage'
+    end
+    @error = "Password incorrect"
+    erb :admin
 end
 
 
@@ -68,6 +69,7 @@ get '/customer' do
 end
 
 get '/adminhomepage' do
+    redirect '/login' unless session[:logged_in]
     erb :adminlogin
 end
 
