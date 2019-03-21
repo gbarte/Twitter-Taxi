@@ -2,6 +2,7 @@ require 'erb'
 require 'sinatra'
 #require 'sinatra/reloader'
 require 'sqlite3'
+require 'twitter'
 
 set :bind, '0.0.0.0' # needed if you're running from Codio
 
@@ -12,14 +13,49 @@ VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 before do
     @db = SQLite3::Database.open './database.db'
 end
+    config = {
+        :consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
+        :consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
+        :access_token => '1092447528761610240-sKtozZ8IDihSED4UuFK2fk39bWNCa7',
+        :access_token_secret => 'CbNNmZHlIZJSttTk3OlAhZ4vdfE9BJtv0iBDYGy8YHar7'
+    }
+
+    client = Twitter::REST::Client.new(config)
 
 get '/index' do
     erb :index
 end
 
 get '/admin' do
+    @submitted = false
+    puts "printed to the terminal" 
     erb :admin
 end
+
+########## finish admin login ###########
+post '/admin' do
+  # puts "printed to the terminal" 
+   @submitted = true
+   @email = params[:mail]
+   puts @email
+   @password = params[:psw]
+    
+   #query = %{SELECT * FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
+   query = %{SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
+
+   @results = @db.execute query
+   puts @results
+   puts "searched through the database"
+   if (@results==1)
+       puts "the email addresses are the same"
+       erb :adminlogin
+   else
+       puts "different email addresses"
+       erb :index
+   end
+  # erb :index
+end
+
 
 get '/customer' do
     ######fix for login
@@ -119,4 +155,10 @@ post '/addnewadmin' do
     @db.execute('INSERT INTO Admins VALUES (?, ?, ?)', [admin_id, @email, @psw])
     
     erb :addnewadmin
+end
+
+get '/viewincomingtweets' do
+    results = client.search('@ise19team09')
+    @tweets = results.take(20)
+    erb :viewincomingtweets
 end

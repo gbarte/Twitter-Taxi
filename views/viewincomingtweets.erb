@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>admin</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/common.css">
+    </head>
+  <body>
+    <div class="header">
+      <ul>
+        <li><a href="index">Home</a></li>
+        <li><a href="customer">Customer account</a></li>
+        <li><a href="admin">Admin account</a></li>
+      </ul>
+    </div>
+    <div class="main">
+        <div class="h12"></div>
+        <div class="content">
+          <div class="h40"></div>
+          <div class="top">
+             <h1>Incoming Tweets</h1>
+              
+              <br />
+              <table boarder = "1">
+                  <tr>
+                      <th>User</th>
+                      <th>Tweet</th>
+                  </tr>
+                  <% @tweets.each do |tweet| %>
+                  <tr>
+                      <td>
+                          <a href = "<%tweet.user.uri %>">
+                              <%=tweet.user.screen_name %>
+                          </a>
+                      </td>
+                      <td>
+                          <%= tweet.text %>
+                      </td>
+                  </tr>
+                <% end %>
+              </table>
+        </div>
+        </div>
+      </div>
+  </body>
+</html>
