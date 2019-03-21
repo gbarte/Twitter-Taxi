@@ -5,7 +5,7 @@
     <title>customer</title>
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/orderhistory.css">
+    <link rel="stylesheet" href="styles/admin.css">
   </head>
   <body>
     <div class="header">
@@ -20,68 +20,15 @@
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-          <h1>Order History</h1>
+          <h1>Customer Home Page</h1>
 
+                <ul>
+                 <li><a href="#"><span>View Order History</span></a></li>
+                 <li><a href="#"><span>Update Personal Details</span></a></li>      
+                </ul>
 
-          <form action="///////.rb" target="_blank" method="get">
-            <table>
-              <tr>
-                <th>Order id</th>
-                <th>Twitter ID</th>
-                <th>Destination</th>
-                <th>Pick up Destine</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Tier ID</th>
-              </tr>
-              <tr>
-                <th><input type="text" name="oname"></th>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="text" name="destination"></th>
-                <th>  <input type="date" name="date" class="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-              <tr>
-                <th><input type="text" name="oname"></th>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="text" name="destination"></th>
-                <th>  <input type="date" name="date" class="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-              <tr>
-                <th><input type="text" name="oname"></th>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="text" name="destination"></th>
-                <th>  <input type="date" name="date" class="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-              <tr>
-                <th><input type="text" name="oname"></th>
-                <th><input type="text" name="tname"></th>
-                <th><input type="text" name="destination"></th>
-                <th><input type="text" name="destination"></th>
-                <th>  <input type="date" name="date" class="date"></th>
-                <th><input type="time"></th>
-                <th><input type="number" min="1" max="3"></th>
-              </tr>
-            </table>
-
-            <!-- PRIMARY KEY(order_id),
-  FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
-  FOREIGN KEY(user_id) REFERENCES UserInfo(user_id) -->
-
-
-
-          </form>
-            <div class="h12"></div>
-          </div>
         </div>
       </div>
+    </div>
   </body>
 </html>
