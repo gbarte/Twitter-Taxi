@@ -69,7 +69,7 @@ post '/customer' do
 
     if params[:psw] == password
         session[:logged_in] = true
-        redirect '/orderhistory'
+        redirect '/customerhomepage'
     end
     @error = "Password incorrect"
     erb :customer
@@ -80,9 +80,9 @@ get '/adminhomepage' do
     erb :adminlogin
 end
 
-get '/orderhistory' do
+get '/customerhomepage' do
     redirect '/customer' unless session[:logged_in]
-    erb :orderhistory
+    erb :customerhomepage
 end
 
 get '/signup' do
