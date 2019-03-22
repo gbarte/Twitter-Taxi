@@ -26,6 +26,7 @@ set :session_secret, 'super secret'
 
     client = Twitter::REST::Client.new(config)
 
+
 get '/index' do
     erb :index
 end
@@ -66,11 +67,12 @@ post '/customer' do
     
     password = @db.execute "SELECT password FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'"
     password = password.join "\s"
-
+    $userID = @db.execute "SELECT user_id FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'" 
+    
     if params[:psw] == password
         session[:logged_in] = true
         redirect '/customerhomepage'
-        userID = @db.execute "SELECT user_id FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'" 
+        
     end
     @error = "Password incorrect"
     erb :customer
@@ -177,7 +179,8 @@ end
 
 get '/orderHistory' do    
     @results = @db.execute('SELECT order_id, pickup, destination, time, tier_id
-                            FROM OrderHistory WHERE user_id = ? ' ,[userID])
+                            FROM OrderHistory WHERE user_id = ? ' ,[$userID])
     
     erb :orderHistory
 end
+
