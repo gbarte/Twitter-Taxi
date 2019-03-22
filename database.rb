@@ -64,3 +64,4 @@ db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [3, 'Luxury']
 db.execute("INSERT INTO Admins(admin_id, email_address, password) VALUES(?, ?, ?)", [1, 'admintest1@gmail.com', 'passwordtest' ])
 db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1, 1, 'Heaven', 'Diamond' , '2019.03.22', 3 ])
 db.execute('INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?)', [1, 'Nobody', 'Nobody', 'Nobody' , '123@sheffield.ac.uk', '111' ])
+db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1001, 1, 'Earth', 'Mars' , '2119.03.22', 3 ])
