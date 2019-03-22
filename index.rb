@@ -13,6 +13,10 @@ VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 before do
     @db = SQLite3::Database.open './database.db'
 end
+
+enable :sessions
+set :session_secret, 'super secret'
+
     config = {
         :consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
         :consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
@@ -22,13 +26,13 @@ end
 
     client = Twitter::REST::Client.new(config)
 
+
 get '/index' do
     erb :index
 end
 
 get '/admin' do
     @submitted = false
-    puts "printed to the terminal" 
     erb :admin
 end
 
@@ -36,43 +40,52 @@ end
 post '/admin' do
   # puts "printed to the terminal" 
    @submitted = true
-   @email = params[:mail]
-   puts @email
-   @password = params[:psw]
+    stm = @db.prepare "SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'"
+    rs = stm.execute
     
-   #query = %{SELECT * FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
-   query = %{SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'}
-
-   @results = @db.execute query
-   puts @results
-   puts "searched through the database"
-   if (@results==1)
-       puts "the email addresses are the same"
-       erb :adminlogin
-   else
-       puts "different email addresses"
-       erb :index
-   end
-  # erb :index
+    password = @db.execute "SELECT password FROM Admins WHERE email_address LIKE '%#{params[:mail]}%' AND password LIKE '%#{params[:psw]}%'"
+    password = password.join "\s"
+ 
+    if params[:psw] == password
+        session[:logged_in] = true
+        redirect '/adminhomepage'
+    end
+    @error = "Password incorrect"
+    erb :admin
 end
 
 
 get '/customer' do
-    ######fix for login
-    unless params[:username].nil?
-    #unless params[:username].nil? && params[:psw].nil?
-        query = %{SELECT twitterHandle FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%'}
-        @results = @db.execute query
+    @submitted = false
+    erb :customer
+end
+
+post '/customer' do
+    @submitted = true
+    stm = @db.prepare "SELECT twitterHandle FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%'"
+    rs = stm.execute
+    
+    password = @db.execute "SELECT password FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'"
+    password = password.join "\s"
+    $userID = @db.execute "SELECT user_id FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'" 
+    
+    if params[:psw] == password
+        session[:logged_in] = true
+        redirect '/customerhomepage'
+        
     end
+    @error = "Password incorrect"
     erb :customer
 end
 
 get '/adminhomepage' do
+    redirect '/admin' unless session[:logged_in]
     erb :adminlogin
 end
 
-get '/orderhistory' do
-    erb :orderhistory
+get '/customerhomepage' do
+    redirect '/customer' unless session[:logged_in]
+    erb :customerhomepage
 end
 
 get '/signup' do
@@ -162,3 +175,20 @@ get '/viewincomingtweets' do
     @tweets = results.take(20)
     erb :viewincomingtweets
 end
+
+
+get '/orderHistory' do    
+    @results = @db.execute('SELECT order_id, user_id, pickup, destination, time, tier_id
+                            FROM OrderHistory WHERE user_id = ? ' ,[$userID])
+    
+    erb :orderHistory
+end
+
+get 'viewcustomersdetail' do
+    @results = @db.execute('SELECT user_id, firstName, lastName, twitterHandle, emailAddress
+                            FROM UserInfo ')
+    
+    erb :viewcustomersdetail
+end    
+    
+    

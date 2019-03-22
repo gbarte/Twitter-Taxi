@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>customer</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/orderhistory.css">
+  </head>
+  <body>
+    <div class="header">
+      <ul>
+        <li><a href="index">Home</a></li>
+        <li><a href="customer">Customer account</a></li>
+        <li><a href="admin">Admin account</a></li>
+      </ul>
+    </div>
+    <div class="main">
+        <div class="h12"></div>
+        <div class="content">
+          <div class="h40"></div>
+          <div class="top">
+          <h1>Order History</h1>
+
+
+          <form action="///////.rb" target="_blank" method="get">
+          </form>
+              
+             <table>
+              <tr>
+                <th>Order ID</th>
+                <th>Twitter ID</th>
+                <th>Pick up</th>
+                <th>Destination</th>
+                <th>Time</th>
+                <th>Tier ID</th>
+              </tr>
+                
+             <% @results.each do |element| %>
+               <tr>
+                 <td><%=h element[0]%> </td>
+                 <td><%=h element[1]%> </td>
+                 <td><%=h element[2]%> </td>
+                 <td><%=h element[3]%> </td>  
+                 <td><%=h element[4]%> </td>     
+                 <td><%=h element[5]%> </td>     
+               </tr>
+             <% end %>  
+             </table>   
+              
+
+            <!-- PRIMARY KEY(order_id),
+  FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
+  FOREIGN KEY(user_id) REFERENCES UserInfo(user_id) -->
+
+
+
+          
+            <div class="h12"></div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
