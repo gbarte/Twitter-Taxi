@@ -184,3 +184,11 @@ get '/orderHistory' do
     erb :orderHistory
 end
 
+get 'viewcustomersdetail' do
+    @results = @db.execute('SELECT user_id, firstName, lastName, twitterHandle, emailAddress
+                            FROM UserInfo ')
+    
+    erb :viewcustomersdetail
+end    
+    
+    
