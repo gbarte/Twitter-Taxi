@@ -22,7 +22,7 @@
           <div class="h40"></div>
           <div class="top">
           <h1>Customer Account</h1>
-            <form action="form_handler" method="post">
+            <form action="signup.html" method="post">
               First name: <input type="text" name="fname"><br>
               Last name: <input type="text" name="lname"><br>
               Twitter ID: <input type="text" name="tname"><br>
@@ -38,7 +38,7 @@
      <p>Thanks <%=h @fname %>, we got your data.</p>
 <% else %>
 
-   <form method = "post" action = "form_handler">
+   <form method = "post" action = "signup.html">
 
        <% if @submitted && !@fname_ok %>
        <p style = "color:red"> Please enter your first name</p>
