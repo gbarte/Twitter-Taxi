@@ -70,6 +70,7 @@ post '/customer' do
     if params[:psw] == password
         session[:logged_in] = true
         redirect '/customerhomepage'
+        userID = @db.execute "SELECT user_id FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'" 
     end
     @error = "Password incorrect"
     erb :customer
@@ -171,4 +172,12 @@ get '/viewincomingtweets' do
     results = client.search('@ise19team09')
     @tweets = results.take(20)
     erb :viewincomingtweets
+end
+
+
+get '/orderHistory' do    
+    @results = @db.execute('SELECT order_id, pickup, destination, time, tier_id
+                            FROM OrderHistory WHERE user_id = ? ' ,[userID])
+    
+    erb :orderHistory
 end
