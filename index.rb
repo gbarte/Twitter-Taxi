@@ -27,17 +27,17 @@ set :session_secret, 'super secret'
     client = Twitter::REST::Client.new(config)
 
 
-get '/index.html' do
+get '/index' do
     erb :index
 end
 
-get '/admin.html' do
+get '/admin' do
     @submitted = false
     erb :admin
 end
 
 ########## finish admin login ###########
-post '/admin.html' do
+post '/admin' do
   # puts "printed to the terminal" 
    @submitted = true
     stm = @db.prepare "SELECT email_address FROM Admins WHERE email_address LIKE '%#{params[:mail]}%'"
@@ -48,19 +48,19 @@ post '/admin.html' do
  
     if params[:psw] == password
         session[:logged_in] = true
-        redirect '/adminhomepage.html'
+        redirect '/adminhomepage'
     end
     @error = "Password incorrect"
     erb :admin
 end
 
 
-get '/customer.html' do
+get '/customer' do
     @submitted = false
     erb :customer
 end
 
-post '/customer.html' do
+post '/customer' do
     @submitted = true
     stm = @db.prepare "SELECT twitterHandle FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%'"
     rs = stm.execute
@@ -71,29 +71,29 @@ post '/customer.html' do
     
     if params[:psw] == password
         session[:logged_in] = true
-        redirect '/customerhomepage.html'
+        redirect '/customerhomepage'
         
     end
     @error = "Password incorrect"
     erb :customer
 end
 
-get '/adminhomepage.html' do
-    redirect '/admin.html' unless session[:logged_in]
+get '/adminhomepage' do
+    redirect '/admin' unless session[:logged_in]
     erb :adminlogin
 end
 
-get '/customerhomepage.html' do
-    redirect '/customer.html' unless session[:logged_in]
+get '/customerhomepage' do
+    redirect '/customer' unless session[:logged_in]
     erb :customerhomepage
 end
 
-get '/signup.html' do
+get '/signup' do
     @submitted = false
     erb :signup
 end
 
-post '/signup.html' do
+post '/signup' do
     @submitted=true
     @fname = params[:fname].strip
     @lname = params[:lname].strip
@@ -133,12 +133,12 @@ end
 
 #get links to customer, admin, and signup page to work from here
 
-get '/currentorders.html' do
+get '/currentorders' do
     @submitted = false
     erb :currentorders
 end
 
-post '/currentorders.html' do
+post '/currentorders' do
     @submitted = true
     @tname = params[:tname].strip
     @pickuplocation = params[:pickuplocation].strip
@@ -153,12 +153,12 @@ post '/currentorders.html' do
     erb :currentorders
 end
 
-get '/addnewadmin.html' do
+get '/addnewadmin' do
     @submitted = false
     erb :addnewadmin
 end
 
-post '/addnewadmin.html' do 
+post '/addnewadmin' do 
     @submitted = true
     @email = params[:email].strip
     @psw = params[:psw].strip 
@@ -170,7 +170,7 @@ post '/addnewadmin.html' do
     erb :addnewadmin
 end
 
-get '/viewincomingtweets.html' do
+get '/viewincomingtweets' do
     results = client.search('@ise19team09')
     @tweets = results.take(20)
     erb :viewincomingtweets
@@ -184,7 +184,7 @@ get '/orderHistory' do
     erb :orderHistory
 end
 
-get 'viewcustomersdetail.html' do
+get '/viewcustomersdetail' do
     @results = @db.execute('SELECT user_id, firstName, lastName, twitterHandle, emailAddress
                             FROM UserInfo ')
     
