@@ -178,7 +178,7 @@ end
 
 
 get '/orderHistory' do    
-    @results = @db.execute('SELECT order_id, pickup, destination, time, tier_id
+    @results = @db.execute('SELECT order_id, user_id, pickup, destination, time, tier_id
                             FROM OrderHistory WHERE user_id = ? ' ,[$userID])
     
     erb :orderHistory
