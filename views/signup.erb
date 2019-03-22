@@ -11,9 +11,9 @@
   <body>
     <div class="header">
       <ul>
-        <li><a href="index">Home</a></li>
-        <li><a href="customer">Customer account</a></li>
-        <li><a href="admin">Admin account</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="customer.html">Customer account</a></li>
+        <li><a href="admin.html">Admin account</a></li>
       </ul>
     </div>
     <div class="main">
@@ -28,34 +28,34 @@
               Twitter ID: <input type="text" name="tname"><br>
               User password:<input type="password" name="psw"><br>
               Email address:<input type="email" name="mail"><br>
-              <input type="submit" value="Submit">
-              <input type="reset">
+              <input type="submit" class="submit"value="Sign Up">
+              <input type="reset" class="reset" value="Reset">
             </form>
-       
+
 
             </div>
 <% if @submitted && @all_ok %>
      <p>Thanks <%=h @fname %>, we got your data.</p>
 <% else %>
-          
+
    <form method = "post" action = "form_handler">
-       
+
        <% if @submitted && !@fname_ok %>
        <p style = "color:red"> Please enter your first name</p>
        <% end %>
-     
+
        <% if @submitted && !@lname_ok %>
        <p style = "color:red"> Please enter your last name</p>
        <% end %>
-       
+
        <% if @submitted && !@tname_ok %>
        <p style = "color:red"> Please enter your twitter handle</p>
        <% end %>
-       
+
     </form>
-            
+
 <% end %>
-         
+
 
           </div>
         </div>
