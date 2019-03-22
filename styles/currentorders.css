@@ -29,9 +29,25 @@ form ul li{
 }
 
 .main .content .top .notes{
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
+  padding:10px 20px 30px;
   position: absolute;
   right: 60px;
   top: 0;
+  border-radius: 30px;
+  border: 3px dashed green;
+}
+.main .content .top .notes p{
+  color: green;
+}
+
+@media only screen and (max-width: 830px){
+  .main .content{
+    height: 600px;
+  }
+  .main .content .top .notes{
+    margin: 50px 0 0 40px;
+    position: static;
+  }
 }
