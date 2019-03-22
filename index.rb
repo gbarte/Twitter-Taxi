@@ -80,7 +80,7 @@ end
 
 get '/adminhomepage' do
     redirect '/admin' unless session[:logged_in]
-    erb :adminlogin
+    erb :adminhomepage
 end
 
 get '/customerhomepage' do
