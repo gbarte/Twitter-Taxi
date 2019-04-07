@@ -27,7 +27,7 @@ set :session_secret, 'super secret'
     client = Twitter::REST::Client.new(config)
 
 
-get '/index' do
+get '/' do
     erb :index
 end
 
@@ -44,12 +44,16 @@ post '/admin' do
     rs = stm.execute
     
     password = @db.execute "SELECT password FROM Admins WHERE email_address LIKE '%#{params[:mail]}%' AND password LIKE '%#{params[:psw]}%'"
+    @passwordVarToUseInERB = password
     password = password.join "\s"
  
-    if params[:psw] == password
+    
+    
+    if params[:psw] == @passwordVarToUseInERB
         session[:logged_in] = true
         redirect '/adminhomepage'
     end
+    
     @error = "Password incorrect"
     erb :admin
 end
