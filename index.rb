@@ -27,8 +27,8 @@ set :session_secret, 'super secret'
     client = Twitter::REST::Client.new(config)
 
 
-get '/' do
-    erb :index
+get '/index' do
+     erb :index
 end
 
 get '/admin' do
@@ -36,7 +36,6 @@ get '/admin' do
     erb :admin
 end
 
-########## finish admin login ###########
 post '/admin' do
   # puts "printed to the terminal" 
    @submitted = true
@@ -45,12 +44,11 @@ post '/admin' do
     
     password = @db.execute "SELECT password FROM Admins WHERE email_address LIKE '%#{params[:mail]}%' AND password LIKE '%#{params[:psw]}%'"
     @passwordVarToUseInERB = password
-    password = password.join "\s"
- 
+    @password = password.join "\s"
     
-    
-    if params[:psw] == @passwordVarToUseInERB
+    if params[:psw] == @password
         session[:logged_in] = true
+        session[:login_time] = Time.now
         redirect '/adminhomepage'
     end
     
@@ -58,6 +56,10 @@ post '/admin' do
     erb :admin
 end
 
+get '/logout' do
+    session.clear
+    erb :logout 
+end
 
 get '/customer' do
     @submitted = false
@@ -70,14 +72,16 @@ post '/customer' do
     rs = stm.execute
     
     password = @db.execute "SELECT password FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'"
-    password = password.join "\s"
+    @customerPasswordForERB = password
+    @password = password.join "\s"
     $userID = @db.execute "SELECT user_id FROM UserInfo WHERE twitterHandle LIKE '%#{params[:username]}%' AND password LIKE '%#{params[:psw]}%'" 
     
-    if params[:psw] == password
+    if params[:psw] == @password
         session[:logged_in] = true
+        session[:login_time] = Time.now
         redirect '/customerhomepage'
-        
     end
+    
     @error = "Password incorrect"
     erb :customer
 end
