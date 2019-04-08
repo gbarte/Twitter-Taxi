@@ -13,6 +13,7 @@
         <li><a href="index">Home</a></li>
         <li><a href="customer">Customer account</a></li>
         <li><a href="admin">Admin account</a></li>
+          
       </ul>
     </div>
     <div class="main">
@@ -23,6 +24,9 @@
           <h1>Customer Account</h1>
 
             <form action="customer" method="post">
+            <% if @submitted && params[:psw]!=@customerPasswordForERB %>
+              <p style="color:red">Your Twitter handle or password was incorrect, please try again.</p>
+            <% end %>
               Twitter handle:<input type="text" name="username"/><br>
               User password:<input type="password" name="psw"/><br>
               <input type="submit" value="Login">
