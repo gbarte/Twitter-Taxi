@@ -22,7 +22,7 @@
           <div class="top">
           <h1>Admin Account</h1>
           <form action="admin" method = "post">
-             <% if @submitted && params[:psw]!=@passwordVarToUseInERB %>
+            <% if @submitted && params[:psw]!=@passwordVarToUseInERB %>
               <p style="color:red">Your email or password was incorrect, please try again.</p>
             <% end %>
             Email address:<input type="email" name="mail"><br>
