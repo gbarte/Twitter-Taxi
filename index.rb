@@ -87,7 +87,25 @@ post '/customer' do
 end
 
 get '/adminhomepage' do
+    @submitted = false
+    results = client.search('@ise19team09')
+    @tweets = results.take(20)
     redirect '/admin' unless session[:logged_in]
+    erb :adminhomepage
+end
+
+post '/adminhomepage' do
+    @submitted = true
+    @tname = params[:tname].strip
+    @pickuplocation = params[:pickuplocation].strip
+    @destination = params[:destination].strip
+    @datetime = params[:datetime].strip
+    @tier_id = params[:tier_id].strip
+    
+    user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+    
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
+    
     erb :adminhomepage
 end
 
@@ -138,28 +156,25 @@ post '/signup' do
     
 end
 
+#get '/currentorders' do
+#    @submitted = false
+#    erb :currentorders
+#end
 
-#get links to customer, admin, and signup page to work from here
-
-get '/currentorders' do
-    @submitted = false
-    erb :currentorders
-end
-
-post '/currentorders' do
-    @submitted = true
-    @tname = params[:tname].strip
-    @pickuplocation = params[:pickuplocation].strip
-    @destination = params[:destination].strip
-    @datetime = params[:datetime].strip
-    @tier_id = params[:tier_id].strip
-    
-    user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
-    
-    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
-    
-    erb :currentorders
-end
+#post '/currentorders' do
+#    @submitted = true
+#    @tname = params[:tname].strip
+#    @pickuplocation = params[:pickuplocation].strip
+#    @destination = params[:destination].strip
+#    @datetime = params[:datetime].strip
+#    @tier_id = params[:tier_id].strip
+#    
+#    user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+#    
+#    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
+#    
+#    erb :currentorders
+#end
 
 get '/addnewadmin' do
     @submitted = false
@@ -178,11 +193,11 @@ post '/addnewadmin' do
     erb :addnewadmin
 end
 
-get '/viewincomingtweets' do
-    results = client.search('@ise19team09')
-    @tweets = results.take(20)
-    erb :viewincomingtweets
-end
+#get '/viewincomingtweets' do
+#    results = client.search('@ise19team09')
+#    @tweets = results.take(20)
+#    erb :viewincomingtweets
+#end
 
 
 get '/orderHistory' do    
@@ -195,8 +210,6 @@ end
 get '/viewcustomersdetail' do
     @results = @db.execute('SELECT user_id, firstName, lastName, twitterHandle, emailAddress
                             FROM UserInfo ')
-    
     erb :viewcustomersdetail
 end    
-    
     
