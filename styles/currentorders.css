@@ -14,9 +14,10 @@ form ul li{
 .main .content{
   height: 550px;
 }
+/*
 .main .content .top{
   position: relative;
-}
+}*/
 .main .content .button ul li.signup{
   height: 30px;
   width: 76px;
