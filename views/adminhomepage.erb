@@ -39,7 +39,7 @@
                         <p>3 - Luxury</p>
                     </div>
                 </div>
-                
+               
                 <div class = "viewincomingtweets">
                    <!-- <a href="viewincomingtweets"><span>View incoming Tweets</span></a> -->
                     <h2>Incoming Tweets</h2>
@@ -49,7 +49,8 @@
                             <th>User</th>
                             <th>Tweet</th>
                         </tr>
-                        <% @tweets.each do |tweet| %>
+                        
+                        <% $tweets.each do |tweet|%>
                         <tr>
                             <td>
                                 <a href = "<%tweet.user.uri %>">
@@ -61,8 +62,13 @@
                             </td>
                         </tr>
                         <% end %>
+                        
+                        
                     </table>
                 </div>
+
+                <!-- put customers order history info here and add a drop down boax that allows you to change their status-->
+                
             </ul>
               
           </div>
