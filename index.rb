@@ -89,7 +89,10 @@ end
 get '/adminhomepage' do
     @submitted = false
     results = client.search('@ise19team09')
-    @tweets = results.take(20)
+    #used dollar sign to make this a global variable:
+    #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
+    $tweets = results.take(20)
+    
     redirect '/admin' unless session[:logged_in]
     erb :adminhomepage
 end
@@ -102,7 +105,8 @@ post '/adminhomepage' do
     @datetime = params[:datetime].strip
     @tier_id = params[:tier_id].strip
     
-    user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+    #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+    user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
     
     @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
     
