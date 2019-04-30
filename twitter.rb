@@ -40,16 +40,17 @@ def checkIfNewTweets(newestOrder, tweets)
            puts "test"
        end
    end
-   return newestTweet.id, newTweets
-
+   newestOrder = newestTweet.id
+   updateDatabase(newTweets)
 end
 
-newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
-newTweets.each do |x|
-    #Get user_id from UserInfo using twitter handle
-    userId = db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [x.user.screen_name])
-    #Insert new tweet with user_id
-    db.execute(
-        'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
-        [x.id, userId, x.text, x.created_at.to_s])
+def updateDatabase(newTweets) 
+    newTweets.each do |x|
+        #Get user_id from UserInfo using twitter handle
+        userId = db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [x.user.screen_name])
+        #Insert new tweet with user_id
+        db.execute(
+            'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
+            [x.id, userId, x.text, x.created_at.to_s])
+    end
 end
