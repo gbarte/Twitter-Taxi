@@ -31,9 +31,11 @@ db.execute("CREATE TABLE CurrentOrders (
     destination    VARCHAR NOT NULL,
     time TEXT,
     tier_id INTEGER,
+    status TEXT,
     PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
-    FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id)
+    FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
+    FOREIGN KEY(status_id) REFERENCES Statuses(status_id)
 );")
 
 db.execute("CREATE TABLE OrderHistory (
@@ -46,6 +48,12 @@ db.execute("CREATE TABLE OrderHistory (
   PRIMARY KEY(order_id),
   FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
   FOREIGN KEY(user_id) REFERENCES UserInfo(user_id)
+);")
+
+db.execute("CREATE TABLE Statuses (
+    status_id INTEGER NOT NULL,
+    status TEXT,
+    PRIMARY KEY(status_id)
 );")
 
 db.execute("CREATE TABLE Tweets (
@@ -61,7 +69,12 @@ db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [1, 'Standard
 db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [2, 'Extra'])
 db.execute("INSERT INTO CarTiers(tier_id, car_tier) VALUES(?, ?)", [3, 'Luxury'])
 
+db.execute("INSERT INTO Statuses(status_id, status) VALUES(?, ?)", [1, 'In progress'])
+db.execute("INSERT INTO Statuses(status_id, status) VALUES(?, ?)", [2, 'Completed'])
+db.execute("INSERT INTO Statuses(status_id, status) VALUES(?, ?)", [3, 'Cancelled'])
+
 db.execute("INSERT INTO Admins(admin_id, email_address, password) VALUES(?, ?, ?)", [1, 'admintest1@gmail.com', 'passwordtest' ])
+ 
 db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1, 1, 'Heaven', 'Diamond' , '2019.03.22', 3 ])
 db.execute('INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?)', [1, 'Nobody', 'Nobody', 'Nobody' , '123@sheffield.ac.uk', '111' ])
 db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1001, 1, 'Earth', 'Mars' , '2119.03.22', 3 ])
