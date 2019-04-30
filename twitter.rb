@@ -9,45 +9,47 @@ config = {
 db = SQLite3::Database.open('database.db')
 client = Twitter::REST::Client.new(config)
 
-tweets = client.user_timeline('ise19team09')
+tweets = client.search('@ise19team09')
 
-X = tweets.take(3)
-newestOrder = X[2]
+newestOrder = db.execute('SELECT tweet_id FROM Tweets LIMIT 1')
+newestOrder = newestOrder[0][0].to_s
 
 def checkIfNewTweets(newestOrder, tweets)
    i = 1
    newTweets = []
-   newestTweet = tweets.take(1)
+   newestTweet = tweets.take(1)[0]
+   #puts newestTweet.text
+   #puts newestOrder
    #Checks if the newest tweet is the newest order
-   while (newestTweet != newestOrder)
+   while (true)
        #if not then there is a new order
        #Gets next batch of new tweets
        mostRecent = tweets.take(i)
        #Checks newest out of grabbed tweets
-       if mostRecent[i-1] != newestOrder
+       if mostRecent[i-1] == nil
+           break;
+       elsif (mostRecent[i-1].id).to_s != newestOrder
            #add to new orders
+           puts i
            newTweets << mostRecent[i-1]
            i += 1
-       elsif mostRecent[i-1] == newestOrder
+       elsif (mostRecent[i-1].id).to_s == newestOrder
            #is equal to the newest order so stop
            break;
+       else
+           puts "test"
        end
    end
-   return newestTweet, newTweets
+   return newestTweet.id, newTweets
 
 end
 
-for i in 0..2 do
-   newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
-   if (newTweets.length != 0)
-      newTweets.each do |x|
-          #Get user_id from UserInfo using twitter handle
-          userId = db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [x.user.screen_name])
-          #Insert new tweet with user_id
-          db.execute(
-              'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
-              [x.id, userId, x.text, x.created_at.to_s])
-    end
-end
-
+newestOrder, newTweets = checkIfNewTweets(newestOrder, tweets)
+newTweets.each do |x|
+    #Get user_id from UserInfo using twitter handle
+    userId = db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [x.user.screen_name])
+    #Insert new tweet with user_id
+    db.execute(
+        'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
+        [x.id, userId, x.text, x.created_at.to_s])
 end
