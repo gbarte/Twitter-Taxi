@@ -3,34 +3,75 @@
   <head>
     <meta charset="utf-8">
     <title>admin</title>
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/common.css"> 
+
   </head>
   <body>
     <div class="header">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="customer.html">Customer account</a></li>
-          <li><a href="admin.html">Admin account</a></li>
+          <li><a href="logout">Logout</a></li>
+          <li><a href="addnewadmin">Add New Admin</a></li>
+          <li><a href="viewcustomersdetail">View Customer Details</a></li>
       </ul>
     </div>
-    <div class="main">
-        <div class="h12"></div>
+      
+    <div class="mainn">
         <div class="content">
-          <div class="h40"></div>
           <div class="top">
           <h1>Admin Home page</h1>
-          <div class="h12"></div>
           <div class="adminbuttons">
             <ul>
-              <li><a href="currentorders.html"><span>Place an Order</span></a></li>
-              <li><a href="addnewadmin.html"><span>Add new Admin</span></a></li>
-              <li><a href="viewincomingtweets.html"><span>View incoming Tweets</span></a></li>
-              <li><a href="#"><span>View customer details</span></a></li>
-            </ul>
-          </div>
+                <div class = "currentorders">
+                    <!-- <a href="currentorders"><span>Place an Order</span></a> -->
+                    <h2>Place an order</h2>
+                    <form action="adminhomepage" target="_blank" method="post">
+                       Twitter Handle: <input type="text" name="tname"><br>
+                       Pick Up Location: <input type = "text" name = "pickuplocation"><br>
+                       Destination:<input type="text" name="destination"><br>
+                       Time:<input type="datetime-local" name="datetime"><br>
+                       Tier ID:<input type="number" min = "1" max = "3" name = "tier_id"><br>
+                       <input type="submit" value="Submit">
+                    </form>
+                    <div class="notes">
+                        <p>Key for Tiers: </p>
+                        <p>1 - Standard</p>
+                        <p>2 - Extra</p>
+                        <p>3 - Luxury</p>
+                    </div>
+                </div>
+               
+                <div class = "viewincomingtweets">
+                   <!-- <a href="viewincomingtweets"><span>View incoming Tweets</span></a> -->
+                    <h2>Incoming Tweets</h2>
+                   
+                    <table boarder = "1">
+                        <tr>
+                            <th>User</th>
+                            <th>Tweet</th>
+                        </tr>
+                        
+                        <% $tweets.each do |tweet|%>
+                        <tr>
+                            <td>
+                                <a href = "<%tweet.user.uri %>">
+                                    <%=tweet.user.screen_name %>
+                                </a>
+                            </td>
+                            <td>
+                                <%= tweet.text %>
+                            </td>
+                        </tr>
+                        <% end %>
+                        
+                        
+                    </table>
+                </div>
 
+                <!-- put customers order history info here and add a drop down boax that allows you to change their status-->
+                
+            </ul>
+              
+          </div>
 
         </div>
         </div>

@@ -10,9 +10,9 @@
   <body>
     <div class="header">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="customer.html">Customer account</a></li>
-          <li><a href="admin.html">Admin account</a></li>
+        <li><a href="index">Home</a></li>
+        <li><a href="customer">Customer account</a></li>
+          <li><a href="admin">Admin account</a></li>
       </ul>
     </div>
     <div class="main">
@@ -21,11 +21,15 @@
           <div class="h40"></div>
           <div class="top">
           <h1>Admin Account</h1>
-          <form action="admin.html" method = "post">
+          <form action="admin" method = "post">
+            <% if @submitted && params[:psw]!=@passwordVarToUseInERB %>
+              <p style="color:red">Your email or password was incorrect, please try again.</p>
+            <% end %>
             Email address:<input type="email" name="mail"><br>
             User password:<input type="password" name="psw"><br>
             <input type="submit" value="Login">
             <input type="reset">
+           
           </form>
         </div>
         </div>

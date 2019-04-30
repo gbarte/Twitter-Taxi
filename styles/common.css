@@ -1,4 +1,4 @@
-*{
+git *{
   font-family:sans-serif;
 
 }
@@ -15,7 +15,6 @@ form{
 }
 input{
   margin-bottom: 10px;
-
 }
 
 input[type=text],input[type=datetime-local],input[type=password],input[type=email],input[type=number]{
@@ -23,13 +22,14 @@ input[type=text],input[type=datetime-local],input[type=password],input[type=emai
   color:#3CBC8D;
   font-size: 15px;
   font-weight: bolder;
-
 }
+
 input[type=text],input[type=datetime-local],input[type=password],input[type=email],input[type=number]:hover{
   border: none;
   border-bottom: 2px solid red;
   outline: none;
 }
+
 input[type=submit], input[type=reset]{
  border-radius:50px;
  padding: 10px 20px;
@@ -81,6 +81,7 @@ input[type=submit]:hover, input[type=reset]:hover{
   background-color: white;
   border: 1px solid #aeb2b5;
   position: relative;
+  right: 100px;
 }
 .main .content .top{
   width: 616px;
@@ -148,6 +149,14 @@ input[type=submit]:hover, input[type=reset]:hover{
   bottom: 0;
   width: 100%;
 }
+
+.h12{
+  height: 12px;
+}
+.h40{
+  height: 40px;
+}
+
 
 @media only screen and (max-width: 830px){
 
