@@ -108,7 +108,7 @@ post '/adminhomepage' do
     #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
     user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
     
-    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id, 1])
     
     erb :adminhomepage
 end
