@@ -14,7 +14,7 @@ tweets = client.search('@ise19team09')
 newestOrder = db.execute('SELECT tweet_id FROM Tweets LIMIT 1')
 newestOrder = newestOrder[0][0].to_s
 
-def checkIfNewTweets(newestOrder, tweets)
+def checkIfNewTweets()
    i = 1
    newTweets = []
    newestTweet = tweets.take(1)[0]
