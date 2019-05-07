@@ -4,6 +4,7 @@ require 'sinatra'
 require 'sqlite3'
 require 'twitter'
 require './twitter.rb'
+require 'geocoder'
 
 set :bind, '0.0.0.0' # needed if you're running from Codio
 
@@ -109,10 +110,18 @@ post '/adminhomepage' do
     @datetime = params[:datetime].strip
     @tier_id = params[:tier_id].strip
     
+    #geocoding the pickup and dropoff locations
+    geocodingresults = Geocoder.search(@pickuplocation)
+    @pickupGeocode = geocodingresults.first.coordinates.to_s
+    puts "#{@pickupGeocode}"
+    geocodingresults = Geocoder.search(@destination)
+    @destinationGeocode = geocodingresults.first.coordinates.to_s
+    puts "#{@destinationGeocode}"
+  
     #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
     user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
     
-    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id, "1"])
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickupGeocode,@destinationGeocode,@datetime.to_s,@tier_id, "1"])
     $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
                           FROM CurrentOrders')
     erb :adminhomepage
