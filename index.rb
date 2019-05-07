@@ -92,7 +92,8 @@ get '/adminhomepage' do
     #used dollar sign to make this a global variable:
     #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
     $tweets = results.take(20)
-    
+      @results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
+                          FROM CurrentOrders')
     redirect '/admin' unless session[:logged_in]
     erb :adminhomepage
 end
