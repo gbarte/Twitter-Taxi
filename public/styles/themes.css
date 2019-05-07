@@ -1,9 +1,3 @@
-.h12{
-  height: 12px;
-}
-.h40{
-  height: 40px;
-}
 .main .content .top .content_title{
   height: 50px;
   color: #3CBC8D;
@@ -117,5 +111,3 @@ li.services_li{
   background-color: #bde4b7;
   }
 }
-
-
