@@ -1,20 +1,24 @@
 require 'sqlite3'
 require 'twitter'
-config = {
-:consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
-:consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
-:access_token => '1092447528761610240-sKtozZ8IDihSED4UuFK2fk39bWNCa7',
-:access_token_secret => 'CbNNmZHlIZJSttTk3OlAhZ4vdfE9BJtv0iBDYGy8YHar7'
-}
-db = SQLite3::Database.open('database.db')
-client = Twitter::REST::Client.new(config)
+#config = {
+#:consumer_key => 'lqCpGOUMYGXaSLMAYUyqH9MhX',
+#:consumer_secret => 'aMUTzyD8UlzcHqyWTtgrgNA6L7LKy9tL6WP7jCRCrVVxYzJa1D',
+#:access_token => '1092447528761610240-sKtozZ8IDihSED4UuFK2fk39bWNCa7',
+#:access_token_secret => 'CbNNmZHlIZJSttTk3OlAhZ4vdfE9BJtv0iBDYGy8YHar7'
+#}
 
-tweets = client.search('@ise19team09')
+#client = Twitter::REST::Client.new(config)
 
-newestOrder = db.execute('SELECT tweet_id FROM Tweets LIMIT 1')
-newestOrder = newestOrder[0][0].to_s
+#tweets = client.search('@ise19team09')
 
-def checkIfNewTweets()
+def checkIfNewTweets(client)
+   db = SQLite3::Database.open('database.db')
+   newestOrder = db.execute('SELECT tweet_id FROM Tweets LIMIT 1')
+   tweets = client.search('@ise19team09')
+   if newestOrder == []
+       newestOrder = tweets.take(1)[0].id
+   end
+   newestOrder = newestOrder[0][0].to_s
    i = 1
    newTweets = []
    newestTweet = tweets.take(1)[0]
@@ -40,7 +44,6 @@ def checkIfNewTweets()
            puts "test"
        end
    end
-   newestOrder = newestTweet.id
    updateDatabase(newTweets)
 end
 
