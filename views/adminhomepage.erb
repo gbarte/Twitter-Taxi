@@ -69,6 +69,29 @@
 
                 <!-- put customers order history info here and add a drop down boax that allows you to change their status-->
                 
+                <div class = "currentordersdisplay">
+                    <h2>Current Orders</h2>
+                    <form action="adminhomepage" target="_blank" method="get"></form>
+                    <table>
+                          <tr>
+                            <th>User ID</th>
+                            <th>Pick up</th>
+                            <th>Destination</th>
+                            <th>Time</th>
+                            <th>Tier ID</th>
+                          </tr>
+                            <% @results.each do |element| %>
+                                   <tr>
+                                     <td><%=h element[0]%> </td>
+                                     <td><%=h element[1]%> </td>
+                                     <td><%=h element[2]%> </td>
+                                     <td><%=h element[3]%> </td>  
+                                     <td><%=h element[4]%> </td>     
+                                   </tr>
+                            <% end %>  
+                     </table>   
+              </div>
+                
             </ul>
               
           </div>
