@@ -87,12 +87,14 @@ post '/customer' do
 end
 
 get '/adminhomepage' do
-    @submitted = false
+    
+    checkIfNewClients(client)
+    @submitted = false;
     results = client.search('@ise19team09')
     #used dollar sign to make this a global variable:
     #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
     $tweets = results.take(20)
-      @results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
+    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
                           FROM CurrentOrders')
     redirect '/admin' unless session[:logged_in]
     erb :adminhomepage
@@ -109,7 +111,7 @@ post '/adminhomepage' do
     #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
     user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
     
-    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id, 1])
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id, "1"])
     
     erb :adminhomepage
 end
