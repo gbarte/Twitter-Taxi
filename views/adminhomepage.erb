@@ -67,8 +67,6 @@
                     </table>
                 </div>
 
-                <!-- put customers order history info here and add a drop down boax that allows you to change their status-->
-                
                 <div class = "currentordersdisplay">
                     <h2>Current Orders</h2>
                     <form action="adminhomepage" target="_blank" method="get"></form>
@@ -80,7 +78,7 @@
                             <th>Time</th>
                             <th>Tier ID</th>
                           </tr>
-                            <% @results.each do |element| %>
+                            <% $results.each do |element| %>
                                    <tr>
                                      <td><%=h element[0]%> </td>
                                      <td><%=h element[1]%> </td>
