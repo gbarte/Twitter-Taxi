@@ -78,3 +78,4 @@ db.execute("INSERT INTO Admins(admin_id, email_address, password) VALUES(?, ?, ?
 db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1, 1, 'Heaven', 'Diamond' , '2019.03.22', 3 ])
 db.execute('INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?)', [1, 'Nobody', 'Nobody', 'Nobody' , '123@sheffield.ac.uk', '111' ])
 db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1001, 1, 'Earth', 'Mars' , '2119.03.22', 3 ])
+db.execute('INSERT INTO Tweets VALUES (?, ?, ?, ?)', [1, 1, 'standard taxi to the diamond please' , '2119.03.22'])
