@@ -3,6 +3,7 @@ require 'sinatra'
 #require 'sinatra/reloader'
 require 'sqlite3'
 require 'twitter'
+require './twitter.rb'
 
 set :bind, '0.0.0.0' # needed if you're running from Codio
 
@@ -88,7 +89,7 @@ end
 
 get '/adminhomepage' do
     
-    checkIfNewClients(client)
+    #checkIfNewTweets(client)
     @submitted = false;
     results = client.search('@ise19team09')
     #used dollar sign to make this a global variable:
@@ -112,7 +113,8 @@ post '/adminhomepage' do
     user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
     
     @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id, "1"])
-    
+    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
+                          FROM CurrentOrders')
     erb :adminhomepage
 end
 
