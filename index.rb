@@ -231,3 +231,23 @@ get '/viewcustomersdetail' do
     erb :viewcustomersdetail
 end    
     
+get '/updatecustomersdetails' do
+    @submitted = false
+    
+end
+
+post '/updatecustomersdetails' do
+    user_id =  @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+    @submitted = true
+    @fname = params[:fname].strip
+    @lname = params[:lname].strip
+    @tname = params[:tname].strip
+    @psw = params[:psw].strip
+    @mail = params[:mail].strip
+    if @tname != @db.execute('SELECT twitterHandle FROM UserInfo WHERE user_id = ?', [user_id])
+        @db.execute('UPDATE UserInfo SET twitterHandle = ? WHERE user_id = ?',[@tname,user_id])
+    end
+     if @mail != @db.execute('SELECT emailAddress FROM UserInfo WHERE user_id = ?', [user_id])
+        @db.execute('UPDATE UserInfo SET emailAddress = ? WHERE user_id = ?',[@mail,user_id])
+    end
+end
