@@ -42,13 +42,15 @@
              <form action="updatecustomerdetails" method="post">
               First name: <input type="text" name="fname" placeholder =><br>
               Last name: <input type="text" name="lname" placeholder = ><br>
-              Twitter ID: <input type="text" name="tname"><br>
+              Twitter Handle: <input type="text" name="tname"><br>
               Email address:<input type="email" name="mail"><br>
               <input type="submit" class="submit"value="Update Details">
 
             </form>
     
-   
+   <% if @submitted %>
+     <p>Thanks <%=h @fname %>, we have updated your details.</p>
+   <% end %>
         </div>
         </div>
       </div>
