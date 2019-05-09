@@ -38,7 +38,6 @@ db.execute("CREATE TABLE CurrentOrders (
     time TEXT,
     tier_id INTEGER,
     status_id TEXT,
-    offer INTEGER DEFAULT 0,
     PRIMARY KEY(user_id),
     FOREIGN KEY(user_id) REFERENCES UserInfo(user_id),
     FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
@@ -52,7 +51,6 @@ db.execute("CREATE TABLE OrderHistory (
   destination VARCHAR,
   time TEXT,
   tier_id INTEGER,
-  offer INTEGER DEFAULT 0,
   PRIMARY KEY(order_id),
   FOREIGN KEY(tier_id) REFERENCES CarTiers(tier_id),
   FOREIGN KEY(user_id) REFERENCES UserInfo(user_id)
@@ -77,7 +75,7 @@ db.execute("INSERT INTO Statuses(status_id, status) VALUES(?, ?)", [3, 'Cancelle
 
 db.execute("INSERT INTO Admins(admin_id, email_address, password) VALUES(?, ?, ?)", [1, 'admintest1@gmail.com', 'passwordtest' ])
 
-db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1, 1, 'Heaven', 'Diamond' , '2019.03.22', 3, 0])
-db.execute('INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?)', [1, 'Nobody', 'Nobody', 'Nobody' , '123@sheffield.ac.uk', '111' ])
-db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1001, 1, 'Earth', 'Mars' , '2119.03.22', 3, 0])
+db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [1, 1, 'Heaven', 'Diamond' , '2019.03.22', 3,])
+db.execute('INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?)', [1, 'Nobody', 'Nobody', 'ise19team09' , '123@sheffield.ac.uk', '111' ])
+db.execute('INSERT INTO OrderHistory VALUES (?, ?, ?, ?, ?, ?)', [2, 1, 'Earth', 'Mars' , '2119.03.22', 3,])
 db.execute('INSERT INTO Tweets VALUES (?, ?, ?, ?)', [1, 1, 'standard taxi to the diamond please' , '2119.03.22', 0])
