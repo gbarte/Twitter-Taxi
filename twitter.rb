@@ -12,8 +12,8 @@ require 'twitter'
 #tweets = client.search('@ise19team09')
 
 def checkIfNewTweets(client)
-   db = SQLite3::Database.open('database.db')
-   newestOrder = db.execute('SELECT tweet_id FROM Tweets LIMIT 1')
+   $db = SQLite3::Database.open('database.db')
+   newestOrder = $db.execute('SELECT * FROM Tweets ORDER BY tweet_id DESC LIMIT 1')
    tweets = client.search('@ise19team09')
    if newestOrder == []
        newestOrder = tweets.take(1)[0].id
@@ -50,10 +50,17 @@ end
 def updateDatabase(newTweets) 
     newTweets.each do |x|
         #Get user_id from UserInfo using twitter handle
-        userId = db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [x.user.screen_name])
+        userId = $db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [x.user.screen_name])
         #Insert new tweet with user_id
-        db.execute(
+        $db.execute(
             'INSERT INTO Tweets VALUES (?, ?, ?, ?)',
             [x.id, userId, x.text, x.created_at.to_s])
     end
+end
+
+def makeTweet(client, tHandle, text)
+    client.update(('@'+tHandle+' '+text))
+    tweets = client.user_timeline('ise19team09')
+    tweet = tweets.take(1)[0]
+    $db.execute('INSERT INTO Tweets VALUES (?, ?, ?, ?)', [tweet.id, 1, text, tweet.created_at.to_s])
 end
