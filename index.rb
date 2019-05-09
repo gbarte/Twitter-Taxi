@@ -96,7 +96,23 @@ get '/adminhomepage' do
     #used dollar sign to make this a global variable:
     #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
     $tweets = results.take(20)
-    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
+    #Determine eligibility of new order for special offer
+    $offer = Array.new(20)
+    for i in 0..19 do
+        userID = @db.execute('SELECT user_ID from UserInfo WHERE twitterHandle = ?', [$tweets[i].user.screen_name])
+        lastOrderOfferID = $db.execute('SELECT MAX(order_id) from OrderHistory WHERE user_id = userId AND discount > 0')
+        if !lastOrderOfferID.nil? 
+            countOrders = $db.execute('SELECT COUNT(order_id) WHERE user_id = userId AND order_id > lastOrderOfferID')
+        else
+            countOrders = $db.execute('SELECT COUNT(order_id) WHERE user_id = userId')
+        end
+        if countOrders > 4
+            $offer[i] = 20
+        else 
+           $offer[i] = 0
+        end
+    end
+    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id, offer
                           FROM CurrentOrders')
     redirect '/admin' unless session[:logged_in]
     erb :adminhomepage
@@ -109,6 +125,7 @@ post '/adminhomepage' do
     @destination = params[:destination].strip
     @datetime = params[:datetime].strip
     @tier_id = params[:tier_id].strip
+    @offer = params[offer].strip
     
     #geocoding the pickup and dropoff locations
     geocodingresults = Geocoder.search(@pickuplocation)
@@ -121,8 +138,8 @@ post '/adminhomepage' do
     #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
     user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
     
-    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickupGeocode,@destinationGeocode,@datetime.to_s,@tier_id, "1"])
-    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?,?)',[user_id,@pickupGeocode,@destinationGeocode,@datetime.to_s,@tier_id, "1", @offer])
+    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id, offer
                           FROM CurrentOrders')
     erb :adminhomepage
 end
@@ -219,7 +236,7 @@ end
 
 
 get '/orderHistory' do    
-    @results = @db.execute('SELECT order_id, user_id, pickup, destination, time, tier_id
+    @results = @db.execute('SELECT order_id, user_id, pickup, destination, time, tier_id, discount
                             FROM OrderHistory WHERE user_id = ? ' ,[$userID])
     
     erb :orderHistory
