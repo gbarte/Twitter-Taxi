@@ -90,12 +90,13 @@ end
 
 get '/adminhomepage' do
     
-    #checkIfNewTweets(client)
+    checkIfNewTweets(client)
     @submitted = false;
     results = client.search('@ise19team09')
     #used dollar sign to make this a global variable:
     #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
     $tweets = results.take(20)
+    
     $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
                           FROM CurrentOrders')
     redirect '/admin' unless session[:logged_in]
@@ -109,6 +110,7 @@ post '/adminhomepage' do
     @destination = params[:destination].strip
     @datetime = params[:datetime].strip
     @tier_id = params[:tier_id].strip
+    
     
     #geocoding the pickup and dropoff locations
     geocodingresults = Geocoder.search(@pickuplocation)
@@ -144,7 +146,7 @@ post '/signup' do
     @tname = params[:tname].strip
     @psw = params[:psw].strip
     @mail = params[:mail].strip
- 
+    
     #perform validation
   
     @fname_ok =!@fname.nil? && @fname != "" 
