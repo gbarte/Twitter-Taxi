@@ -30,6 +30,7 @@
                        Destination:<input type="text" name="destination"><br>
                        Time:<input type="datetime-local" name="datetime"><br>
                        Tier ID:<input type="number" min = "1" max = "3" name = "tier_id"><br>
+                       Offer:<input type="number" min = "0" max = "100" name = "offer"><br>
                        <input type="submit" value="Submit">
                     </form>
                     <div class="notes">
@@ -48,17 +49,21 @@
                         <tr>
                             <th>User</th>
                             <th>Tweet</th>
+                            <th>Offer</th>
                         </tr>
                         
-                        <% $tweets.each do |tweet|%>
+                        <% for i in 0..19 %>
                         <tr>
                             <td>
-                                <a href = "<%tweet.user.uri %>">
-                                    <%=tweet.user.screen_name %>
+                                <a href = "<% $tweets[i].user.uri %>">
+                                    <%= $tweets[i].user.screen_name %>
                                 </a>
                             </td>
                             <td>
-                                <%= tweet.text %>
+                                <%= $tweets[i].text %>
+                            </td>
+                            <td>
+                                <%= $offer[i] %>
                             </td>
                         </tr>
                         <% end %>
@@ -77,6 +82,7 @@
                             <th>Destination</th>
                             <th>Time</th>
                             <th>Tier ID</th>
+                            <th>Offer</th>
                           </tr>
                             <% $results.each do |element| %>
                                    <tr>
@@ -84,7 +90,8 @@
                                      <td><%=h element[1]%> </td>
                                      <td><%=h element[2]%> </td>
                                      <td><%=h element[3]%> </td>  
-                                     <td><%=h element[4]%> </td>     
+                                     <td><%=h element[4]%> </td> 
+                                     <td><%=h element[5]%> </td>
                                    </tr>
                             <% end %>  
                      </table>   
