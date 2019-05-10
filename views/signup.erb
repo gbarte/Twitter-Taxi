@@ -53,7 +53,11 @@
        <% if @submitted && !@tname_ok %>
        <p style = "color:red"> Please enter your twitter handle</p>
        <% end %>
-
+       
+       <% if @submitted && !@psw %>
+       <p style = "color:red"> Please enter password</p>
+       <% end %>
+       
     </form>
 
 <% end %>
