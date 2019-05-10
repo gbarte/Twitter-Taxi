@@ -50,16 +50,15 @@
                             <th>Tweet</th>
                         </tr>
                         
-                        
-                        <% for i in 0..19 %>
+                        <%$tweets.each do |tweet|%>                          
                         <tr>
-                            <td>
-                                <a href ="<% $tweets[i].user.uri %>">
-                                    <%= $tweets[i].user.screen_name %>
+                             <td>
+                                <a href ="<% tweet.user.uri %>">
+                                    <%= tweet.user.screen_name %>
                                 </a>
                             </td>
                             <td>
-                                <%=$tweets[i].text%>
+                                <%= tweet.text%>
                             </td>
                          </tr>
                         <%end%>
