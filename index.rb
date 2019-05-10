@@ -258,23 +258,50 @@ get '/viewcustomersdetail' do
     erb :viewcustomersdetail
 end    
     
-get '/updatecustomersdetails' do
+get '/updatecustomerdetails' do    
+    $results = @db.execute('SELECT firstName, lastName, twitterHandle, emailAddress
+                            FROM UserInfo WHERE user_id = ?', [$userID] )
     @submitted = false
-    
+    erb :updatecustomerdetails
 end
 
-post '/updatecustomersdetails' do
-    user_id =  @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+
+post '/updatecustomerdetails' do
+    user_id =  @db.execute('SELECT user_id FROM UserInfo WHERE user_id = ?', [$userID])
     @submitted = true
     @fname = params[:fname].strip
     @lname = params[:lname].strip
     @tname = params[:tname].strip
-    @psw = params[:psw].strip
     @mail = params[:mail].strip
-    if @tname != @db.execute('SELECT twitterHandle FROM UserInfo WHERE user_id = ?', [user_id])
+    @oldpsw = params[:oldpsw].strip
+    @newpsw = params[:newpsw].strip
+    @checknewpsw = params[:checknewpsw].strip
+
+ 
+    if @fname != ""  && @fname != (@db.execute('SELECT firstName FROM UserInfo WHERE user_id = ?', [user_id])).join
+        @db.execute('UPDATE UserInfo SET firstName = ? WHERE user_id = ?',[@fname,user_id])
+    end
+    
+    if @lname != "" && @lname != (@db.execute('SELECT lastName FROM UserInfo WHERE user_id = ?', [user_id])).join
+        @db.execute('UPDATE UserInfo SET lastName = ? WHERE user_id = ?',[@lname,user_id])
+    end
+    
+    if @tname != "" &&  @tname != (@db.execute('SELECT twitterHandle FROM UserInfo WHERE user_id = ?', [user_id])).join
         @db.execute('UPDATE UserInfo SET twitterHandle = ? WHERE user_id = ?',[@tname,user_id])
     end
-     if @mail != @db.execute('SELECT emailAddress FROM UserInfo WHERE user_id = ?', [user_id])
+    
+    if @mail != "" && @mail != (@db.execute('SELECT emailAddress FROM UserInfo WHERE user_id = ?', [user_id])).join
         @db.execute('UPDATE UserInfo SET emailAddress = ? WHERE user_id = ?',[@mail,user_id])
     end
+
+    datapassword = (@db.execute('SELECT password FROM UserInfo WHERE user_id = ?', [user_id])).join
+    
+    @psw_ok = @oldpsw == datapassword && @newpsw == @checknewpsw
+    if  @psw_ok
+        @db.execute('UPDATE UserInfo SET password = ? WHERE user_id = ?',[@newpsw,user_id])
+    end 
+      $results = @db.execute('SELECT firstName, lastName, twitterHandle, emailAddress
+                            FROM UserInfo WHERE user_id = ?', [$userID] )
+    
+        erb :updatecustomerdetails
 end
