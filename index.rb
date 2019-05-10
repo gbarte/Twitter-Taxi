@@ -89,9 +89,9 @@ post '/customer' do
 end
 
 post '/twitterReply' do
-    tHandle = params[:Handle].strip
+    tHandle = params[:tHandle].strip
     text = params[:text].strip
-    makeTweet($client,tHandle,text)
+    makeTweet(client,tHandle,text)
     erb:adminhomepage
 end
 
