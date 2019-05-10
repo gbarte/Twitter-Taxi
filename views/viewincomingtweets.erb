@@ -22,20 +22,24 @@
              <h2>Incoming Tweets</h2>
               
               <br />
-              <table boarder = "1">
+              <table border = "1">
                   <tr>
                       <th>User</th>
                       <th>Tweet</th>
+                      <th>Offer</th>
                   </tr>
-                  <% @tweets.each do |tweet| %>
+                  <% for i in 0..19 %>
                   <tr>
                       <td>
-                          <a href = "<%tweet.user.uri %>">
-                              <%=tweet.user.screen_name %>
+                          <a href = "<% $tweets.user.uri %>">
+                              <%= $tweets.user.screen_name %>
                           </a>
                       </td>
                       <td>
-                          <%= tweet.text %>
+                          <%= $tweets.text %>
+                      </td>
+                      <td>
+                          <%= $offer[i] %>
                       </td>
                   </tr>
                 <% end %>

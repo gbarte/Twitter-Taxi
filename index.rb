@@ -88,6 +88,13 @@ post '/customer' do
     erb :customer
 end
 
+post '/twitterReply' do
+    tHandle = params[:Handle].strip
+    text = params[:text].strip
+    makeTweet($client,tHandle,text)
+    erb:adminhomepage
+end
+
 get '/adminhomepage' do
     
     checkIfNewTweets(client)
@@ -96,10 +103,12 @@ get '/adminhomepage' do
     #used dollar sign to make this a global variable:
     #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
     $tweets = results.take(20)
-    
-    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
-                          FROM CurrentOrders')
+
+    #$results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
+
+    $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id  FROM CurrentOrders')
     redirect '/admin' unless session[:logged_in]
+    
     erb :adminhomepage
 end
 
@@ -121,9 +130,9 @@ post '/adminhomepage' do
     puts "#{@destinationGeocode}"
   
     #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
-    user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders';
+    user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders'
     
-    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickupGeocode,@destinationGeocode,@datetime.to_s,@tier_id, "1"])
+    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickupGeocode,@destinationGeocode,@datetime.to_s,@tier_id, 1])
     $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
                           FROM CurrentOrders')
     erb :adminhomepage
@@ -221,7 +230,7 @@ end
 
 
 get '/orderHistory' do    
-    @results = @db.execute('SELECT order_id, user_id, pickup, destination, time, tier_id
+    @results = @db.execute('SELECT order_id, user_id, pickup, destination, time, tier_id, discount
                             FROM OrderHistory WHERE user_id = ? ' ,[$userID])
     
     erb :orderHistory
@@ -233,3 +242,23 @@ get '/viewcustomersdetail' do
     erb :viewcustomersdetail
 end    
     
+get '/updatecustomersdetails' do
+    @submitted = false
+    
+end
+
+post '/updatecustomersdetails' do
+    user_id =  @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+    @submitted = true
+    @fname = params[:fname].strip
+    @lname = params[:lname].strip
+    @tname = params[:tname].strip
+    @psw = params[:psw].strip
+    @mail = params[:mail].strip
+    if @tname != @db.execute('SELECT twitterHandle FROM UserInfo WHERE user_id = ?', [user_id])
+        @db.execute('UPDATE UserInfo SET twitterHandle = ? WHERE user_id = ?',[@tname,user_id])
+    end
+     if @mail != @db.execute('SELECT emailAddress FROM UserInfo WHERE user_id = ?', [user_id])
+        @db.execute('UPDATE UserInfo SET emailAddress = ? WHERE user_id = ?',[@mail,user_id])
+    end
+end

@@ -48,26 +48,31 @@
                         <tr>
                             <th>User</th>
                             <th>Tweet</th>
-                            <th>
                         </tr>
                         
-                        <% $tweets.each do |tweet|%>
+                        
+                        <% for i in 0..19 %>
                         <tr>
                             <td>
-                                <a href = "<%tweet.user.uri %>">
-                                    <%=tweet.user.screen_name %>
+                                <a href ="<% $tweets[i].user.uri %>">
+                                    <%= $tweets[i].user.screen_name %>
                                 </a>
                             </td>
                             <td>
-                                <%= tweet.text %>
+                                <%=$tweets[i].text%>
                             </td>
-                        </tr>
-                        <% end %>
-                        
-                        
+                         </tr>
+                        <%end%>
                     </table>
                 </div>
 
+                <form action="twitterReply" targer="_blank" method="post">
+                    Twitter Handle: <input type="text" name="tHandle">
+                    Reply: <input type ="text" name ="text">
+                    <input type="submit" value="submit">
+                </form>
+                
+                
                 <div class = "currentordersdisplay">
                     <h2>Current Orders</h2>
                    <!-- <form action="adminhomepage" target="_blank" method="get"></form>  -->
@@ -94,6 +99,7 @@
                                              <option value="cancel">Cancel</option>
                                          </select>
                                      </td>  
+                                       
                                    </tr>
                             <% end %>  
                      </table>   
