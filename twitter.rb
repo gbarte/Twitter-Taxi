@@ -63,4 +63,6 @@ def makeTweet(client, tHandle, text)
     tweets = client.user_timeline('ise19team09')
     tweet = tweets.take(1)[0]
     $db.execute('INSERT INTO Tweets VALUES (?, ?, ?, ?)', [tweet.id, 1, text, tweet.created_at.to_s])
+
 end
+

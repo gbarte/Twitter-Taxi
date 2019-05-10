@@ -104,8 +104,7 @@ get '/adminhomepage' do
     #dolar sign also used in adminhomepage.erb to access this variable in adminhomepage.erb
     $tweets = results.take(20)
 
-    #$results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
-
+  
     $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id  FROM CurrentOrders')
     redirect '/admin' unless session[:logged_in]
     
@@ -185,25 +184,6 @@ post '/signup' do
     
 end
 
-#get '/currentorders' do
-#    @submitted = false
-#    erb :currentorders
-#end
-
-#post '/currentorders' do
-#    @submitted = true
-#    @tname = params[:tname].strip
-#    @pickuplocation = params[:pickuplocation].strip
-#    @destination = params[:destination].strip
-#    @datetime = params[:datetime].strip
-#    @tier_id = params[:tier_id].strip
-#    
-#    user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
-#    
-#    @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?)',[user_id,@pickuplocation,@destination,@datetime.to_s,@tier_id])
-#    
-#    erb :currentorders
-#end
 
 get '/addnewadmin' do
     @submitted = false
@@ -242,23 +222,73 @@ get '/viewcustomersdetail' do
     erb :viewcustomersdetail
 end    
     
-get '/updatecustomersdetails' do
+get '/updatecustomerdetails' do    
+    $results = @db.execute('SELECT firstName, lastName, twitterHandle, emailAddress
+                            FROM UserInfo WHERE user_id = ?', [$userID] )
     @submitted = false
-    
+    erb :updatecustomerdetails
 end
 
-post '/updatecustomersdetails' do
-    user_id =  @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
+
+post '/updatecustomerdetails' do
+    user_id =  @db.execute('SELECT user_id FROM UserInfo WHERE user_id = ?', [$userID])
     @submitted = true
     @fname = params[:fname].strip
     @lname = params[:lname].strip
     @tname = params[:tname].strip
-    @psw = params[:psw].strip
     @mail = params[:mail].strip
-    if @tname != @db.execute('SELECT twitterHandle FROM UserInfo WHERE user_id = ?', [user_id])
+    @oldpsw = params[:oldpsw].strip
+    @newpsw = params[:newpsw].strip
+    @checknewpsw = params[:checknewpsw].strip
+
+ 
+    if @fname != ""  && @fname != (@db.execute('SELECT firstName FROM UserInfo WHERE user_id = ?', [user_id])).join
+        @db.execute('UPDATE UserInfo SET firstName = ? WHERE user_id = ?',[@fname,user_id])
+    end
+    
+    if @lname != "" && @lname != (@db.execute('SELECT lastName FROM UserInfo WHERE user_id = ?', [user_id])).join
+        @db.execute('UPDATE UserInfo SET lastName = ? WHERE user_id = ?',[@lname,user_id])
+    end
+    
+    if @tname != "" &&  @tname != (@db.execute('SELECT twitterHandle FROM UserInfo WHERE user_id = ?', [user_id])).join
         @db.execute('UPDATE UserInfo SET twitterHandle = ? WHERE user_id = ?',[@tname,user_id])
     end
-     if @mail != @db.execute('SELECT emailAddress FROM UserInfo WHERE user_id = ?', [user_id])
+    
+    if @mail != "" && @mail != (@db.execute('SELECT emailAddress FROM UserInfo WHERE user_id = ?', [user_id])).join
         @db.execute('UPDATE UserInfo SET emailAddress = ? WHERE user_id = ?',[@mail,user_id])
     end
+
+    datapassword = (@db.execute('SELECT password FROM UserInfo WHERE user_id = ?', [user_id])).join
+    
+    @psw_ok = @oldpsw == datapassword && @newpsw == @checknewpsw
+    if  @psw_ok
+        @db.execute('UPDATE UserInfo SET password = ? WHERE user_id = ?',[@newpsw,user_id])
+    end 
+      $results = @db.execute('SELECT firstName, lastName, twitterHandle, emailAddress
+                            FROM UserInfo WHERE user_id = ?', [$userID] )
+    
+        erb :updatecustomerdetails
+end
+
+get '/updatetiers' do
+    @submitted = false
+    erb :updatetiers
+end
+
+post '/updatetiers' do
+    @submitted = true
+    @tier1 = params[:standard]
+    @tier2 = params[:extra]
+    @tier3 = params[:luxury]
+
+    if @tier1.nil? 
+        @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Standard'])
+    end
+     if @tier2.nil? 
+        @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Extra'])
+    end
+     if @tier3.nil? 
+        @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Luxury'])
+    end
+    erb :updatetiers
 end
