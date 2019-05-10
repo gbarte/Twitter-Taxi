@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>admin</title>
+    <link rel="stylesheet" href="styles/common.css"> 
+  </head>
+  <body>
+    <div class="header">
+      <ul>
+          <li><a href="logout">Logout</a></li>
+          <li><a href="addnewadmin">Add New Admin</a></li>
+          <li><a href="viewcustomersdetail">View Customer Details</a></li>
+          <li><a href="updatetiers">Update Available Tiers</a></li>
+      </ul>
+    </div>
+    <div class="mainn">
+        <div class="content">
+          <div class="top">
+          <h1>Admin Home page</h1>
+          <div class="adminbuttons">
+            <ul>
+                <form action="updatetiers" method="post">
+                  <input type="checkbox" name="standard" value="tier1" > Standard<br>
+                  <input type="checkbox" name="extra" value="tier2"> Extra<br>
+                  <input type="checkbox" name="luxury" value="tier3"> Luxury<br>
+                  <input type="submit" value="Submit">
+                </form>
+                </div>   
+            </ul>
+          </div>
+        </div>
+        </div>
+      </div>
+  </body>
+</html>
