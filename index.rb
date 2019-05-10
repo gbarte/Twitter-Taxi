@@ -139,6 +139,7 @@ end
 
 get '/customerhomepage' do
     redirect '/customer' unless session[:logged_in]
+    @results = @db.execute('SELECT car_tier FROM CarTiers')
     erb :customerhomepage
 end
 
