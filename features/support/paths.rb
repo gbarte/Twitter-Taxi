@@ -28,6 +28,10 @@ module NavigationHelpers
         '/customerhomepage'
     when /customer order history page/
         '/orderHistory'
+    when /update customer details page/
+        '/updatecustomerdetails'
+    when /update tiers page/ 
+        '/updatetiers'
     when /logout page/
         '/logout'
     
