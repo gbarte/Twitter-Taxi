@@ -6,11 +6,16 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/themes.css">
+
   </head>
   <body>
     <div class="header">
       <ul>
         <li><a href="logout">Logout</a></li>
+        <li><a href="updatecustomerdetails">Update Personal Details</a></li>
+        <li><a href="orderHistory">Order History</a></li>
+
       </ul>
     </div>
     <div class="main">
@@ -18,17 +23,20 @@
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-          <h1>Customer Home page</h1>
+          <div class = "content_title">Welcome to Twaxi!</div>
           <div class="h12"></div>
-          <div class="adminbuttons">
-            <ul>
-              <li><a href="orderHistory"><span>Order history</span></a></li>
-              <li><a href="#"><span></span></a></li>
-              <li><a href="#"><span></span></a></li>
-              <li><a href="#"><span></span></a></li>
 
-            </ul>
-          </div>
+                    <table>
+                          <tr>
+                            <th>These are the following tiers available: </th>
+                          </tr>
+                            <% @results.each do |element| %>
+                                   <tr>
+                                     <td><%=h element[0]%> </td>
+                                   </tr>
+                            <% end %>  
+                     </table>   
+
 
 
         </div>

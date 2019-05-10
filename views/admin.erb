@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/themes.css">
+      
   </head>
   <body>
     <div class="header">
@@ -20,7 +22,7 @@
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-          <h1>Admin Account</h1>
+              <div class="content_title">Admin Account</div>
           <form action="admin" method = "post">
             <% if @submitted && params[:psw]!=@passwordVarToUseInERB %>
               <p style="color:red">Your email or password was incorrect, please try again.</p>

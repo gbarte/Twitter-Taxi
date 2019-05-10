@@ -1,0 +1,79 @@
+
+.main{
+  height: 1200px;
+}
+.main .content.admin_content{
+  height: 1000px;
+
+}
+.main .content .top {
+  height: 800px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.main .content .top .left{
+  position: absolute;
+  left: 0;
+  width: 60%;
+  height: 500px;
+}
+.main .content .top .left .view_tweets{
+height: 50%;
+border: 1px solid green;
+border-radius: 30px;
+margin: 10px;
+padding: 20px;
+
+}
+.main .content .top .left .recent_orders{
+  height: 50%;
+  border: 1px solid green;
+  border-radius: 30px;
+  padding: 20px;
+
+}
+.main .content .top .right{
+  position: absolute;
+  right: 0;
+  width: 40%;
+
+  height: 500px;
+
+}
+.main .content .top .right .place_order{
+  padding-left: 20px;
+  height: 300px;
+  border: 1px solid green;
+  border-radius: 30px;
+}
+.main .content .top .right .place_order form{
+  padding: 30px;
+}
+form ul li{
+  display: block;
+  height: 30px;
+  width: 400px;
+  margin: 0 auto;
+  background-color:#e3ebf7;
+  margin-top: 30px;
+  border: 1px solid #afb2b5;
+  border-radius: 50px;
+}
+.admin_button{
+position: absolute;
+bottom: 0;
+right: 0;
+
+}
+
+.main .content .button ul li.signup{
+  height: 30px;
+  width: 76px;
+}
+.main .content .button ul li span{
+  top: 15px;
+  left: 40px;
+
+
+}

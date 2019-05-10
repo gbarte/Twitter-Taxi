@@ -6,13 +6,15 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/orderhistory.css">
+    <link rel="stylesheet" href="styles/themes.css">
+
   </head>
   <body>
     <div class="header">
       <ul>
-      <li><a href="index">Home</a></li>
-        <li><a href="customer">Customer account</a></li>
-        <li><a href="admin">Admin account</a></li>
+        <li><a href="logout">Logout</a></li>
+        <li><a href="updatecustomerdetails">Update Personal Details</a></li>
+        <li><a href="orderHistory">Order History</a></li>
       </ul>
     </div>
     <div class="main">
@@ -20,7 +22,7 @@
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-          <h1>Order History</h1>
+          <div class = "content_title">Order History</div>
 
 
           <form action="///////.rb" target="_blank" method="get">
@@ -34,7 +36,6 @@
                 <th>Destination</th>
                 <th>Time</th>
                 <th>Tier ID</th>
-                <th>Offer</th>
               </tr>
                 
              <% @results.each do |element| %>
@@ -45,7 +46,6 @@
                  <td><%=h element[3]%> </td>  
                  <td><%=h element[4]%> </td>     
                  <td><%=h element[5]%> </td>  
-                 <td><%=h element[6]%> </td>
                </tr>
              <% end %>  
              </table>   
