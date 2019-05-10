@@ -30,6 +30,15 @@
               <input type="reset" value="Reset">
               </form>
             </div>
+            <form action = "addnewadmin" method = "post">
+                <% if @submitted && !@email_ok%>
+                   <p style = "color:red"> Please enter email</p>
+                <% end %>  
+                
+                <% if @submitted && !@psw_ok%>
+                   <p style = "color:red"> Please enter password</p>
+                <% end %>  
+            </form>
         </div>
      </div>
   </body>

@@ -70,7 +70,7 @@
                 </div>
                 
                 <div>
-                    <form action="twitterReply" target="_blank" method="post">
+                    <form action="twitterReply" method="post">
                         Twitter Handle: <input type="text" name="tHandle">
                         Reply: <input type="text" name="text">
                         <input type="submit" value="submit">
@@ -97,11 +97,15 @@
                                      <td><%=h element[3]%> </td>  
                                      <td><%=h element[4]%> </td>     
                                      <td>
-                                         <select id = "statusValue">
-                                             <option value="progress">In progress</option>
-                                             <option value="completed">Completed</option>
-                                             <option value="cancel">Cancel</option>
+                                         <form action = "updateStatus" method = "post">
+                                         <select name = "statusValue">
+                                             <option name = "progress" value="progress">In progress</option>
+                                             <option name = "completed" value="completed">Completed</option>
+                                             <option name = "cancel" value="cancel">Cancel</option>
                                          </select>
+                                         <input type="submit" value="Submit">
+                                         </form>
+                                      
                                      </td>  
                                        
                                    </tr>

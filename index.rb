@@ -92,9 +92,19 @@ post '/twitterReply' do
     tHandle = params[:tHandle].strip
     text = params[:text].strip
     makeTweet(client,tHandle,text)
-    erb:adminhomepage
+    erb :adminhomepage
 end
 
+post '/updateStatus' do
+    @statusValue = params[:statusValue].strip
+    @user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [$tname])
+    if @statusValue == "completed"
+
+        @db.execute('UPDATE CurrentOrders SET status_id = ? WHERE user_id = ?', [2.to_s,@user_id])
+    end
+
+    erb :adminhomepage
+end
 get '/adminhomepage' do
     
     checkIfNewTweets(client)
@@ -118,8 +128,7 @@ post '/adminhomepage' do
     @destination = params[:destination].strip
     @datetime = params[:datetime].strip
     @tier_id = params[:tier_id].strip
-    
-    
+    $tname = @tname
     #geocoding the pickup and dropoff locations
     geocodingresults = Geocoder.search(@pickuplocation)
     @pickupGeocode = geocodingresults.first.coordinates.to_s
@@ -130,7 +139,7 @@ post '/adminhomepage' do
   
     #user_id = @db.execute('SELECT user_id FROM UserInfo WHERE twitterHandle = ?', [@tname])
     user_id=@db.get_first_value 'SELECT MAX(user_id)+1 FROM CurrentOrders'
-    
+ 
     @db.execute('INSERT INTO CurrentOrders VALUES (?,?,?,?,?,?)',[user_id,@pickupGeocode,@destinationGeocode,@datetime.to_s,@tier_id, 1])
     $results = @db.execute('SELECT user_id, pick_up, destination, time, tier_id
                           FROM CurrentOrders')
@@ -197,10 +206,14 @@ post '/addnewadmin' do
     @email = params[:email].strip
     @psw = params[:psw].strip 
     
-    admin_id = @db.get_first_value 'SELECT MAX(admin_id)+1 FROM Admins'
+    @psw_ok = !@psw.nil? && @psw != ""
+    @email_ok =!@email.nil? && @email =~ VALID_EMAIL_REGEX
+    @all_ok = @email_ok && @psw_ok
     
-    @db.execute('INSERT INTO Admins VALUES (?, ?, ?)', [admin_id, @email, @psw])
-    
+    if @all_ok
+        admin_id = @db.get_first_value 'SELECT MAX(admin_id)+1 FROM Admins'
+        @db.execute('INSERT INTO Admins VALUES (?, ?, ?)', [admin_id, @email, @psw])
+    end
     erb :addnewadmin
 end
 
@@ -285,6 +298,7 @@ post '/updatetiers' do
 
     if @tier1.nil? 
         @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Standard'])
+ 
     end
      if @tier2.nil? 
         @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Extra'])
