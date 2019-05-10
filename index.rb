@@ -305,3 +305,28 @@ post '/updatecustomerdetails' do
     
         erb :updatecustomerdetails
 end
+
+get '/updatetiers' do
+    @submitted = false
+    erb :updatetiers
+end
+
+post '/updatetiers' do
+    @submitted = true
+    @tier1 = params[:standard].strip
+    @tier2 = params[:extra].strip
+    @tier3 = params[:luxury].strip
+    puts @tier1
+    puts @tier2
+    puts @tier3
+    if @tier1.nil? 
+        @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Standard'])
+    end
+     if @tier2.nil? 
+        @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Extra'])
+    end
+     if @tier3.nil? 
+        @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Luxury'])
+    end
+    erb :updatetiers
+end
