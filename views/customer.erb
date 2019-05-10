@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/customer.css">
+    <link rel="stylesheet" href="styles/themes.css">
   </head>
   <body>
     <div class="header">
@@ -21,7 +22,7 @@
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-          <h1>Customer Account</h1>
+           <div class="content_title">Customer Account</div>
 
             <form action="customer" method="post">
             <% if @submitted && params[:psw]!=@customerPasswordForERB %>

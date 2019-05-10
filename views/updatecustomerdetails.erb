@@ -6,11 +6,15 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/themes.css">
+
   </head>
   <body>
     <div class="header">
       <ul>
         <li><a href="logout">Logout</a></li>
+        <li><a href="updatecustomerdetails">Update Personal Details</a></li>
+        <li><a href="orderHistory">Order History</a></li>
       </ul>
     </div>
     <div class="main">
@@ -18,7 +22,7 @@
         <div class="content">
           <div class="h40"></div>
           <div class="top">
-                      <h1>Current Customer Details</h1>
+             <div class = "content_title">Current Customer Details</div>
              <table>
               <tr>
                 <th>First Name</th>
@@ -37,7 +41,7 @@
                </tr>
              <% end %>  
              </table>   
-          <h1>Update Customer Details</h1>
+          <div class = "content_title">Update Customer Details</div>
           <div class="h12"></div>
              <form action="updatecustomerdetails" method="post">
               First name: <input type="text" name="fname"><br>
