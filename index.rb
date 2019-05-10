@@ -313,12 +313,10 @@ end
 
 post '/updatetiers' do
     @submitted = true
-    @tier1 = params[:standard].strip
-    @tier2 = params[:extra].strip
-    @tier3 = params[:luxury].strip
-    puts @tier1
-    puts @tier2
-    puts @tier3
+    @tier1 = params[:standard]
+    @tier2 = params[:extra]
+    @tier3 = params[:luxury]
+
     if @tier1.nil? 
         @db.execute('DELETE FROM CarTiers WHERE car_tier = ?', ['Standard'])
     end
