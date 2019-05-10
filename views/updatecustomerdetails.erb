@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Update Customer Details</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/admin.css">
+  </head>
+  <body>
+    <div class="header">
+      <ul>
+        <li><a href="logout">Logout</a></li>
+      </ul>
+    </div>
+    <div class="main">
+        <div class="h12"></div>
+        <div class="content">
+          <div class="h40"></div>
+          <div class="top">
+                      <h1>Current Customer Details</h1>
+             <table>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Twitter Handle</th>
+                <th>Email</th>
+              </tr>
+                
+             <% $results.each do |element| %>
+               <tr>
+                 <td><%=h element[0]%> </td>
+                 <td><%=h element[1]%> </td>
+                 <td><%=h element[2]%> </td>
+                 <td><%=h element[3]%> </td>  
+     
+               </tr>
+             <% end %>  
+             </table>   
+          <h1>Update Customer Details</h1>
+          <div class="h12"></div>
+             <form action="updatecustomerdetails" method="post">
+              First name: <input type="text" name="fname"><br>
+              Last name: <input type="text" name="lname"><br>
+              Twitter Handle: <input type="text" name="tname"><br>
+              Email address:<input type="email" name="mail"><br>
+              Current password:<input type="password" name="oldpsw"><br>
+              New password:<input type="password" name="newpsw"><br>
+              Confirm new password:<input type="password" name="checknewpsw"><br>
+              <input type="submit" class="submit"value="Update Details">
+            </form>
+    
+   <% if @submitted %>
+     <p>Thanks <%=h @fname %>, we have updated your details.</p>
+   <% end %>
+        </div>
+        </div>
+      </div>
+  </body>
+</html>

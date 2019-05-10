@@ -10,7 +10,7 @@ require 'twitter'
 #client = Twitter::REST::Client.new(config)
 
 #tweets = client.search('@ise19team09')
-
+ $db = SQLite3::Database.open('database.db')
 def checkIfNewTweets(client)
    $db = SQLite3::Database.open('database.db')
    newestOrder = $db.execute('SELECT * FROM Tweets ORDER BY tweet_id DESC LIMIT 1')
