@@ -1,83 +1,79 @@
-.main .content {
-  height: 550px;
+
+.main{
+  height: 1200px;
 }
-.main .content .top .adminbuttons{
- height: 100px;
- width: 100%;
- margin: 20px;
-}
-.main .content .top .adminbuttons ul{
-  overflow: hidden;
+.main .content.admin_content{
+  height: 1000px;
 
 }
-.main .content .top .adminbuttons ul li{
-  margin-bottom: 20px;
-  float: none;
-  display: block;
-  height: 60px;
-  width: 400px;
-  border-radius: 50px;
+.main .content .top {
+  height: 800px;
   position: relative;
-  padding: 10px 20px;
-  text-decoration: none;
-  cursor: pointer;
-  background: transparent;
-  color: #00AA66;
-  border-color: #00AA66;
-  border-style: solid;
-  font-size: 15px;
+  margin: 0 auto;
 }
-.main .content .top .adminbuttons ul li span{
+
+.main .content .top .left{
   position: absolute;
-  top: 30px;
-  left: 130px;
-  text-align: center;
-  color: #ffffff;
-  font-size: 20px;
-  color: #00AA66;
+  left: 0;
+  width: 60%;
+  height: 500px;
 }
-.main .content .top .adminbuttons ul li:hover{
-background-color: #bde4b7;
+.main .content .top .left .view_tweets{
+height: 50%;
+border: 1px solid green;
+border-radius: 30px;
+margin: 10px;
+padding: 20px;
+
+}
+.main .content .top .left .recent_orders{
+  height: 50%;
+  border: 1px solid green;
+  border-radius: 30px;
+  padding: 20px;
+
+}
+.main .content .top .right{
+  position: absolute;
+  right: 0;
+  width: 40%;
+
+  height: 500px;
+
+}
+.main .content .top .right .place_order{
+  padding-left: 20px;
+  height: 300px;
+  border: 1px solid green;
+  border-radius: 30px;
+}
+.main .content .top .right .place_order form{
+  padding: 30px;
+}
+form ul li{
+  display: block;
+  height: 30px;
+  width: 400px;
+  margin: 0 auto;
+  background-color:#e3ebf7;
+  margin-top: 30px;
+  border: 1px solid #afb2b5;
+  border-radius: 50px;
+}
+.admin_button{
+position: absolute;
+bottom: 0;
+right: 0;
+
 }
 
-.h12{
-  height: 12px;
+.main .content .button ul li.signup{
+  height: 30px;
+  width: 76px;
 }
-.h40{
-  height: 40px;
-}
+.main .content .button ul li span{
+  top: 15px;
+  left: 40px;
 
-@media only screen and (max-width: 830px){
-  .main .content{
-    height: 450px;
-  }
-  .main .content .top .adminbuttons ul li{
-    margin-bottom: 10px;
-    float: none;
-    display: block;
-    height: 30px;
-    width: 240px;
-    border-radius: 50px;
-    position: relative;
-    padding: 10px 20px;
-    text-decoration: none;
-    cursor: pointer;
-    background: transparent;
-    color: #00AA66;
-    border-color: #00AA66;
-    border-style: solid;
-    font-size: 15px;
-  }
-  .main .content .top .adminbuttons ul li span{
-    position: absolute;
-    top: 15px;
-    left: 45px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 18px;
-    color: #00AA66;
-  }
-  .main .content .top .adminbuttons ul li:hover{
-  background-color: #bde4b7;
-  }
+
 }
