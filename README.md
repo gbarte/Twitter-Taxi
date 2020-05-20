@@ -15,4 +15,4 @@ Info on how to run the application and the development process can be found in [
 - Ziyang Lin
 - Gabrielė Barteškaitė
 
-Academic year 2018/2019
+###### Academic year 2018/2019
